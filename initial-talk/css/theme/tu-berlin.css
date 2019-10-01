@@ -81,7 +81,10 @@ body:before {
 }
 
 .reveal h4 {
-  font-size: 1em; }
+  font-size: 0.8em;
+  color: #000; 
+  font-weight: normal;
+}
 
 .reveal h1 {
   text-shadow: none; }
@@ -288,3 +291,29 @@ body:before {
 @media print {
   .backgrounds {
     background-color: #fff; } }
+
+#footer-left, #footer-right {
+  position: absolute;
+  color: #999;
+  font-size: 0.8em;
+}
+
+#footer-left {
+  bottom: 3em;
+  left: 3em;
+}
+
+#footer-right {
+  bottom: 3em;
+  left: 9em;
+}
+
+.reveal .slide-number {
+  position: absolute;
+  left: 0em;
+  bottom: 2.6em;
+  width: 1em;
+  height: 1.3em;
+  font-size: 0.8em;
+  background-color: #c50e1f;
+}

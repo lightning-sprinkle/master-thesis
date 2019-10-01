@@ -25,9 +25,10 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+				<section  style="text-align: left;">
 					<h1>Automatic Universal In-Browser Payments</h1>
 					<h3>An alternative model to web advertising</h2>
+					<h4>Daan Middendorp - November 6<sup>th</sup>,  2019</h4>
 				</section>
 				<section>
 					<h2>Problem &amp; Statement</h2>
@@ -42,13 +43,18 @@
 				<section>Slide 2</section>
 			</div>
 		</div>
+		
+		<div id="hidden" style="display:none;">
+				<div id="header">
+						<div id="footer-left">6.11.2019</div>
+						<div id="footer-right">Automatic Universal In-Browser Payments | Initial Talk | Daan Middendorp</div>
+				</div>
+		</div>
 
 		<script src="js/reveal.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
@@ -56,7 +62,31 @@
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true }
 				]
+			})
+
+			var header = $('#header').html();
+			if ( window.location.search.match( /print-pdf/gi ) ) {
+					Reveal.addEventListener( 'ready', function( event ) {
+							$('.slide-background').append(header)
+					})
+			} else {
+					$('div.reveal').append(header)
+					$('#footer-left').hide()
+					$('#footer-right').hide()
+			}
+
+			Reveal.addEventListener('slidechanged', (event) => {
+					const isFirst = event.indexh === 0;
+					Reveal.configure({ slideNumber: !isFirst });
+					if (isFirst) {
+						$('#footer-right').hide()
+						$('#footer-left').hide()
+					} else {
+						$('#footer-right').show()
+						$('#footer-left').show()
+					}
 			});
+
 		</script>
 	</body>
 </html>
