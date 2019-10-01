@@ -21,6 +21,13 @@ body:after {
   right: 3.5em;
 }
 
+body:before {
+  content: url(../../images/footer.png);
+  position: fixed;
+  bottom: 3.5em;
+  right: 3.5em;
+}
+
 .reveal {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
   font-size: 42px;
