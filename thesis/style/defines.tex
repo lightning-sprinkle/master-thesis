@@ -1,0 +1,41 @@
+\def\pic{
+  \clip (0,0) rectangle (2,2);
+  \definecolor{LightBlue}{rgb}{0.55,0.55,1}
+  \definecolor{DarkBlue}{rgb}{0.2,0.2,0.5}
+  \filldraw[fill=gray!20,draw=white] (0,0) [very thick]rectangle (1,1);
+  \filldraw[fill=gray!20,draw=white] (1,1) [very thick]rectangle (2,2);
+  \filldraw[fill=LightBlue,draw=white] (0,1) [very thick]rectangle (1,2);
+}
+
+
+\definecolor{LightBlue}{rgb}{0.55,0.55,1}
+\definecolor{DarkBlue}{rgb}{0.71,0.12,0.07}%{0.2,0.2,0.5}
+\definecolor{DarkRed}{rgb}{0.71,0.12,0.07}
+
+
+\newcommand{\STYLEfootnotetext}
+{
+  \begin{minipage}
+%  {.3\textwidth}
+%  \begin{minipage}
+%    \includegraphics{snet_logo_gray.png}
+%  \end{minipage}
+  \scriptsize "Service-centric networking"\\TU Berlin University\\
+  \end{minipage}
+}
+
+
+\newcommand{\STYLEleftpicture}
+{
+	\vspace{-11.6mm}
+	\begin{tikzpicture}[xscale=-1,scale=.75]
+    \pic
+	\end{tikzpicture}
+}
+\newcommand{\STYLErightpicture}
+{
+	\vspace{-11.6mm}
+	\begin{tikzpicture}[scale=.75]
+    \pic    
+  \end{tikzpicture}
+}
