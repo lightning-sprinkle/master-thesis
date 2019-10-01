@@ -30,7 +30,7 @@ body:before {
 
 .reveal {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-size: 42px;
+  font-size: 32px;
   font-weight: normal;
   color: #222; }
 
@@ -52,6 +52,7 @@ body:before {
 /*********************************************
  * HEADERS
  *********************************************/
+
 .reveal h1,
 .reveal h2,
 .reveal h3,
@@ -59,23 +60,25 @@ body:before {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #222;
+  color: #c50e1f;
   font-family: "Source Sans Pro", Helvetica, sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
-  text-transform: uppercase;
   text-shadow: none;
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 2.5em; }
+  font-size: 2em; }
 
 .reveal h2 {
-  font-size: 1.6em; }
+  font-size: 1.4em; 
+}
 
 .reveal h3 {
-  font-size: 1.3em; }
+  font-size: 1.3em; 
+  color: #999;
+}
 
 .reveal h4 {
   font-size: 1em; }
@@ -236,7 +239,7 @@ body:before {
 
 .reveal .roll span:after {
   color: #fff;
-  background: #1a53a1; }
+  background: #c50e1f; }
 
 /*********************************************
  * IMAGES
@@ -258,21 +261,21 @@ body:before {
 
 .reveal a:hover img {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #2a76dd;
+  border-color: #c50e1f;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {
-  color: #2a76dd; }
+  color: #c50e1f; }
 
 /*********************************************
  * PROGRESS BAR
  *********************************************/
 .reveal .progress {
   background: rgba(0, 0, 0, 0.2);
-  color: #2a76dd; }
+  color: #c50e1f; }
 
 .reveal .progress span {
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
