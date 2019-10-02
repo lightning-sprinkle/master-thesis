@@ -1,12 +1,12 @@
-# master-thesis
+# Master Thesis
 
 Basically all the documentation related to my master thesis at the Technische Universität Berlin.
 
 
 ## Research proposal
-
-[Pdf](https://landgenoot.github.io/master-thesis/research-proposal/research-proposal.pdf)
+Simple overview of the problem, state of the art and a concept.
+Read as [Pdf](https://landgenoot.github.io/master-thesis/research-proposal/research-proposal.pdf)
 
 ## Initial talk
-
+Initial presentation held at the graduate seminar at 6.11.2019 for the Service-centric Networking resaerch group.
 [Slides](https://landgenoot.github.io/master-thesis/initial-talk)
