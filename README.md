@@ -13,6 +13,10 @@ Initial presentation held at the graduate seminar at 6.11.2019 for the Service-c
 
 **[Slides](https://landgenoot.github.io/master-thesis/initial-talk)**
 
+## Code
+The proof-of-concept of the concept described in the research proposal.
+**[Repository](https://github.com/landgenoot/universal-pay.js)**
+
 ## Thesis 
 The final report which concludes the research and documents all the intermediate steps.
 
