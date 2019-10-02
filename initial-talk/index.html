@@ -1,91 +1,113 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>pay.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/tu-berlin.css">
+	<title>Universal Pay</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/monokai.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/tu-berlin.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section  style="text-align: left;">
-					<h1>Automatic Universal In-Browser Payments</h1>
-					<h3>An alternative model to web advertising</h2>
-					<h4>Daan Middendorp - November 6<sup>th</sup>,  2019</h4>
-				</section>
-				<section>
-					<h2>Problem &amp; Statement</h2>
-					<b>Advertisement networks:</b><br />
-					<ul>
-						<li>Suboptimal from a user point of view</li>
-						<li>Non-transparent</li>
-						<li>No real alternatives</li>
-					</ul>
-				</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Automatic Universal In-Browser Payments</h1>
+				<h3>An alternative model to web advertising</h2>
+					<h4>Daan Middendorp - November 6<sup>th</sup>, 2019</h4>
+			</section>
+			<section>
+				<h2>Problem &amp; Statement</h2>
+				<table>
+					<tr>
+						<td>
+							<b>Advertisement networks:</b><br />
+							<ul>
+								<li>Suboptimal from a user point of view</li>
+								<li>Non-transparent</li>
+								<li>Lack of alternatives</li>
+							</ul>
+						</td>
+						<td>
+							<b>Subscription model:</b><br />
+							<ul>
+								<li>Too much effort</li>
+								<li>Expensive</li>
+								<li>Vendor lock-in</li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Motivation</h2>
+				<ul>
+					<li></li>
+				</ul>
+			</section>
 		</div>
-		
-		<div id="hidden" style="display:none;">
-				<div id="header">
-						<div id="footer-left">6.11.2019</div>
-						<div id="footer-right">Automatic Universal In-Browser Payments | Initial Talk | Daan Middendorp</div>
-				</div>
+	</div>
+
+	<div id="hidden" style="display:none;">
+		<div id="header">
+			<div id="footer-left">6.11.2019</div>
+			<div id="footer-right">Automatic Universal In-Browser Payments | Initial Talk | Daan Middendorp</div>
 		</div>
+	</div>
 
-		<script src="js/reveal.js"></script>
-		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="js/reveal.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
-		<script>
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
-				]
+	<script>
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true }
+			]
+		})
+
+		var header = $('#header').html();
+		if (window.location.search.match(/print-pdf/gi)) {
+			Reveal.addEventListener('ready', function (event) {
+				$('.slide-background').append(header)
 			})
+		} else {
+			$('div.reveal').append(header)
+			$('#footer-left').hide()
+			$('#footer-right').hide()
+		}
 
-			var header = $('#header').html();
-			if ( window.location.search.match( /print-pdf/gi ) ) {
-					Reveal.addEventListener( 'ready', function( event ) {
-							$('.slide-background').append(header)
-					})
+		Reveal.addEventListener('slidechanged', (event) => {
+			const isFirst = event.indexh === 0;
+			Reveal.configure({ slideNumber: !isFirst });
+			if (isFirst) {
+				$('#footer-right').hide()
+				$('#footer-left').hide()
 			} else {
-					$('div.reveal').append(header)
-					$('#footer-left').hide()
-					$('#footer-right').hide()
+				$('#footer-right').show()
+				$('#footer-left').show()
 			}
+		});
 
-			Reveal.addEventListener('slidechanged', (event) => {
-					const isFirst = event.indexh === 0;
-					Reveal.configure({ slideNumber: !isFirst });
-					if (isFirst) {
-						$('#footer-right').hide()
-						$('#footer-left').hide()
-					} else {
-						$('#footer-right').show()
-						$('#footer-left').show()
-					}
-			});
+	</script>
+</body>
 
-		</script>
-	</body>
 </html>
