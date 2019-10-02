@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Universal Pay</title>
+	<title>Universal Payments | Initial talk</title>
 
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/reveal.css">
@@ -30,7 +30,7 @@
 			<section>
 				<h1>Automatic Universal In-Browser Payments</h1>
 				<h3>An alternative model to web advertising</h2>
-					<h4>Daan Middendorp - November 6<sup>th</sup>, 2019</h4>
+					<h4>Daan Middendorp &dash; November 6<sup>th</sup>, 2019</h4>
 			</section>
 			<section>
 				<h2>Problem &amp; Statement</h2>
@@ -41,7 +41,7 @@
 							<ul>
 								<li>Suboptimal from a user point of view</li>
 								<li>Non-transparent</li>
-								<li>Lack of alternatives</li>
+								<li>Privacy invasive</li>
 							</ul>
 						</td>
 						<td>
@@ -73,41 +73,7 @@
 
 	<script src="js/reveal.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-
-	<script>
-		Reveal.initialize({
-			dependencies: [
-				{ src: 'plugin/markdown/marked.js' },
-				{ src: 'plugin/markdown/markdown.js' },
-				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true }
-			]
-		})
-
-		var header = $('#header').html();
-		if (window.location.search.match(/print-pdf/gi)) {
-			Reveal.addEventListener('ready', function (event) {
-				$('.slide-background').append(header)
-			})
-		} else {
-			$('div.reveal').append(header)
-			$('#footer-left').hide()
-			$('#footer-right').hide()
-		}
-
-		Reveal.addEventListener('slidechanged', (event) => {
-			const isFirst = event.indexh === 0;
-			Reveal.configure({ slideNumber: !isFirst });
-			if (isFirst) {
-				$('#footer-right').hide()
-				$('#footer-left').hide()
-			} else {
-				$('#footer-right').show()
-				$('#footer-left').show()
-			}
-		});
-
-	</script>
+	<script src="js/tu-berlin.js"></script>
 </body>
 
 </html>
