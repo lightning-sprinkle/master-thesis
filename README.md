@@ -5,6 +5,7 @@ Basically all the documentation related to my master thesis at the Technische Un
 
 ## Research proposal
 Simple overview of the problem, state of the art and a concept.
+
 Read as [Pdf](https://landgenoot.github.io/master-thesis/research-proposal/research-proposal.pdf)
 
 ## Initial talk
