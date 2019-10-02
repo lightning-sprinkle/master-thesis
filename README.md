@@ -11,4 +11,12 @@ Read as [PDF](https://landgenoot.github.io/master-thesis/research-proposal/resea
 ## Initial talk
 Initial presentation held at the graduate seminar at 6.11.2019 for the Service-centric Networking resaerch group.
 
-View [slides](https://landgenoot.github.io/master-thesis/initial-talk)
+View [slides](https://landgenoot.github.io/master-thesis/initial-talk) (WIP)
+
+## Thesis
+The final report which concludes the research and documents all the intermediate steps.
+
+Read as [PDF](https://landgenoot.github.io/master-thesis/thesis/main.pdf) (WIP)
+
+## Defense
+Final presentation for the members of the 
