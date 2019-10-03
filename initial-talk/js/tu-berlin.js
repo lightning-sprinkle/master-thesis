@@ -4,8 +4,11 @@ Reveal.initialize({
     { src: 'plugin/markdown/marked.js' },
     { src: 'plugin/markdown/markdown.js' },
     { src: 'plugin/notes/notes.js', async: true },
-    { src: 'plugin/highlight/highlight.js', async: true }
-  ]
+    { src: 'plugin/highlight/highlight.js', async: true },
+    { src: 'plugin/zoom-js/zoom.js', async: true }
+  ],
+  hash: true,
+  controls: false  
 })
 
 var header = $('#header').html();
