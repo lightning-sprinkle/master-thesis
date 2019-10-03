@@ -14,18 +14,29 @@ body {
   background: #fff;
   background-color: #fff; }
 
-body:after {
-  content: url(../../images/logo.svg);
+.tu-logo {
+  width: 100%;
+  height: auto;
+}
+
+.tu-logo-container {
   position: fixed;
   top: 3.5em;
   right: 3.5em;
+  width: 13.5%;
+  height: auto;
+}
+.snet-logo {
+  width: 100%;
+  height: auto;
 }
 
-body:before {
-  content: url(../../images/footer.png);
+.snet-logo-container {
   position: fixed;
   bottom: 3.5em;
   right: 3.5em;
+  width: 21.5%;
+  height: auto;
 }
 
 .reveal {
