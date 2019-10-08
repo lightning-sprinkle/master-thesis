@@ -326,9 +326,9 @@ body {
 .reveal .slide-number {
   position: absolute;
   left: 0em;
-  bottom: 4em;
+  bottom: 4.15em;
   width: 1.5em;
-  padding: 0.5em;
+  padding: 0.3em 0.5em 0.4em 0.4em;
   font-size: 1.5vw;
   text-align: right;
   background-color: #c50e1f;
