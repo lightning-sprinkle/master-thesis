@@ -14,33 +14,6 @@ body {
   background: #fff;
   background-color: #fff; }
 
-.tu-logo {
-  width: 100%;
-  height: auto;
-}
-
-.tu-logo-container {
-  position: fixed;
-  top: 3.5em;
-  right: 3.5em;
-  width: 13.5%;
-  height: auto;
-  font-size: 1.5vw;
-}
-.snet-logo {
-  width: 100%;
-  height: auto;
-}
-
-.snet-logo-container {
-  position: fixed;
-  bottom: 3.5em;
-  right: 3.5em;
-  width: 21.5%;
-  height: auto;
-  font-size: 1.5vw;
-}
-
 .reveal {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
   font-size: 32px;
@@ -306,6 +279,37 @@ body {
 @media print {
   .backgrounds {
     background-color: #fff; } }
+
+/*********************************************
+ * TU Berlin additions
+ *********************************************/
+
+.tu-logo {
+  width: 100%;
+  height: auto;
+}
+
+.tu-logo-container {
+  position: fixed;
+  top: 3.5em;
+  right: 3.5em;
+  width: 13.5%;
+  height: auto;
+  font-size: 1.5vw;
+}
+.snet-logo {
+  width: 100%;
+  height: auto;
+}
+
+.snet-logo-container {
+  position: fixed;
+  bottom: 3.5em;
+  right: 3.5em;
+  width: 21.5%;
+  height: auto;
+  font-size: 1.5vw;
+}
 
 #footer-left, #footer-right {
   position: absolute;
