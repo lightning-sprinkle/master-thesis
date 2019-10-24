@@ -15,3 +15,7 @@ Publishers can load an external library into their website, this library communi
 If the connection with the wallet is established, the publisher will ask the wallet for a payment. The wallet can accept this payment and create a transaction which is sent to the blockchain network.
 
 \subsection{Communication}
+One of the challenges with this architecture it the communication and how to make sure a connection is established with a publisher that actually is legit and provides content on the users' computer. 
+
+In order to make this possible, a structure with WebRTC is proposed. WebRTC is a technology which makes it possible for different websites (even accross different computers) to communicate with eachother. The technology was invented to make real time video and audio communication possible within the browser. However, the API makes it also possible to send data over the channel. 
+
