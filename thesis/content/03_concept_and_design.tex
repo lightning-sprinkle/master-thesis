@@ -6,8 +6,12 @@ The proposed solution is an implementation which is completely based on the exis
 There are basically two components in this system: there is a wallet, which takes care of the storage of encryption keys and is responsible for handling all communications with a cryptocurrency network. The second part is the publisher library, which can be embedded by any website who want to take part in the universal-pay ecosystem. 
 
 \subsection{Wallet}
+\label{sec:wallet}
 The wallet will be, like all the other parts of the architecture, implemented in standard web technology, which means Javascript. For the convenience of the end user, the wallet will be hosted on a domain to make sure that for the system to work, still no additional configuration is needed. However, this requires trust. If the owner of the domain becomes malicious, the entire wallet might be stolen. Therefore, the user is free to host his own wallet on every desired location, even \textit{localhost} is a possiblity.
 
 \subsection{Publisher library}
+Publishers can load an external library into their website, this library communicates with the wallet, as described in \ref{sec:wallet}. When the user visits the page of the publisher, the loaded library will check if there is a wallet running on that local machine. If this is not the case, it will embed the hosted instance of the wallet in an iframe. 
+
+If the connection with the wallet is established, the publisher will ask the wallet for a payment. The wallet can accept this payment and create a transaction which is sent to the blockchain network.
 
 \subsection{Communication}
