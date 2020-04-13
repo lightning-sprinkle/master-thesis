@@ -1,14 +1,15 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-This master thesis is written at the Service-centric Networking (SNET) research group of the Technische Universität Berlin. 
-In this master thesis, the main focus lies at solving this so called unpaid content problem while assuring the privacy of the user and keeping the costs low. The increasing possibilties in the field of blockchain technology are of great use for such a solution and therefore also a key building block of the proof of concept.
-
 The business of online advertising has evolved into a landscape which is not transparent anymore. A handful of large advertisement firms are controlling practically every online ad you see. Almost every movement during the visit of a regular website is sent in an obfuscated way to the advertisement broker, without any visible sign to the visitor. This makes the whole browsing experience obnoxious, especially now it turns out that entire societies are being influenced by the power of advertisement networks, as we have seen in the Cambridge Analytica scandal \cite{FakeWebPage11}.
 
 Several publishers have been experimenting with alternative ways of generating income. Currently, some of them are selling subscriptions, asking for donations or using the visitors' computer for cryptomining \cite{ruth2018digging}. But these models do not seem to be a real substitute for advertisement networks. 
 
+In this master thesis, which is written at the Service-centric networking research group at the Technische Universität Berlin, the main focus lies at solving this so called unpaid content problem while assuring the privacy of the user and keeping the costs low. The increasing possibilties in the field of blockchain technology are of great use for such a solution and therefore also a key building block of the proof of concept.
+
 The concept, as discribed in chapter \ref{cha:conceptanddesign}, features a system that runs in the background while browsing the web. If the users visits a publisher that also supports the system, a message will be shown to the user indicating that it is possible to hide the advertisements and pay a small amount per pageview instead. When this permission is granted, the user will not see any advertisements on that particular website again, but contribute by sending small payments to the publisher instead.
+
+As this research is made possible by public money, the entire process is kept as transparent as possible. This is achieved by publishing everything related to this thesis under a permissive free software license on Github \footnote{\url{https://github.com/lightning-sprinkle}}.
 
 \section{Research statement}
 
@@ -37,6 +38,4 @@ In order to explain the different models and concept, a couple of roles will be 
   \item[Publisher] \hfill \\ The owner of the website that provides the unpaid content
   \item[User] \hfill \\ The visitor of the website that consumes the unpaid content
   \item[Ad broker] \hfill \\ A third party providing advertisements to the user in order to generate revenue for the publisher
-\end{description}
-
-\section{Thesis Structure}
+\end{description} 
