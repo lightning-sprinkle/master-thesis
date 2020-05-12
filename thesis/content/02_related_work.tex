@@ -81,7 +81,12 @@ In order to achieve a system that makes it possible to reward content makers on 
 
 For this thesis, another application of the BAT-token is more interesting. The systems actually also works the other way around: users can spend their BAT-tokens on the websites of the publishers they support in an automated manner. The remainder of this section shows the inner working of this system and explains why this is still suboptimal from a decentral perspective. First of all, the concept of the Brave Vault is explained. Secondly, the privacy and anonymity measures are analysed. Lastly, the monolopy of Brave in this ecosystem is discussed.
 
-The Brave Vault is a private datastore where browsing information is stored. The central part in this Brave Vault is the \textit{persona}, that is used to identify and set your browsing behavior. The \textit{persona} can also be synced with other browsers, so that one user still uses the same profile when switching devices. 
+The Brave Vault is a private datastore where browsing information is stored. The central part in this Brave Vault is the \textit{persona}, that is used to identify and set your browsing behavior. The \textit{persona} can also be synced with other browsers, so that one user still uses the same profile when switching devices. Another part of the Brave Vault is the \textit{session}. The \textit{session} is bound to the browser and does not have a predefined lifetime. Browser dependant information, like browsing history is stored here \cite{brave-vault}.
+
+In the \textit{persona}, there is a setting that states that the user wishes an ad-free browsing experience along with a contribution amount. The contribution amount is divided among the websites that the users visits. However, if these contributions are sent to the publishers directly, it would be very hard to guarantee privacy and anonymity. Based on the contributions, it is possible to reconstruct a profile that might be linked to an individual. To tackle these privcay concerns, Brave developed the Brave Ledger. The Brave Ledger is a central system that processes micropayments for the contributions to the publishers. The system is designed on two core principles: anonymous and accountable. This means that Brave should not be able to correlate publisher visits with contributions and Brave should only be able to have insights in the contributions on a an aggregated basis.
+
+
+
 
 
 \subsubsection{ICO}
