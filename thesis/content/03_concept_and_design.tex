@@ -1,22 +1,36 @@
 \chapter{Concept and Design}
 \label{cha:conceptanddesign}
-The proposed solution is an implementation which is completely based on the existing infrastructure that is available on the web. This comes with the advance that it works across all different types of devices, from desktop computers to smartphones. Another feature of this approach is that it does not require any additional tools, which might need some effort to setup.
 
-\section{Architecture}
-There are basically two components in this system: there is a wallet, which takes care of the storage of encryption keys and is responsible for handling all communications with a cryptocurrency network. The second part is the publisher library, which can be embedded by any website who want to take part in the universal-pay ecosystem. 
+As stated in the research statement, the goal of this thesis is to come up with a solution that solves the unpaid content problem. During the first phase of this research, several opportunities are explored. This chapter gives a chronological overview of these explorations and describes the final model in detail.
 
-\subsection{Wallet}
-\label{sec:wallet}
-The wallet will be, like all the other parts of the architecture, implemented in standard web technology, which means Javascript. For the convenience of the end user, the wallet will be hosted on a domain to make sure that for the system to work, still no additional configuration is needed. However, this requires trust. If the owner of the domain becomes malicious, the entire wallet might be stolen. Therefore, the user is free to host his own wallet on every desired location, even \textit{localhost} is a possiblity.
+\section{Privacy preserving ad network}
 
-\subsection{Publisher library}
-Publishers can load an external library into their website, this library communicates with the wallet, as described in \ref{sec:wallet}. When the user visits the page of the publisher, the loaded library will check if there is a wallet running on that local machine. If this is not the case, it will embed the hosted instance of the wallet in an iframe. 
+\section{Universal payment solution}
 
-If the connection with the wallet is established, the publisher will ask the wallet for a payment. The wallet can accept this payment and create a transaction which is sent to the blockchain network.
+\subsection{WebRTC hack}
 
-\subsection{Communication}
-One of the challenges with this architecture it the communication and how to make sure a connection is established with a publisher that actually is legit and provides content on the users' computer. 
+\subsection{Lightning network}
 
-In order to make this possible, a structure with WebRTC is proposed. WebRTC is a technology which makes it possible for different websites (even accross different computers) to communicate with eachother. The technology was invented to make real time video and audio communication possible within the browser. However, the API makes it also possible to send data over the channel. 
 
-\subsection{Micropayments}
+
+
+% The proposed solution is an implementation which is completely based on the existing infrastructure that is available on the web. This comes with the advance that it works across all different types of devices, from desktop computers to smartphones. Another feature of this approach is that it does not require any additional tools, which might need some effort tosetup.
+
+% \section{Architecture}
+% There are basically two components in this system: there is a wallet, which takes care of the storage of encryption keys and is responsible for handling all communications with a cryptocurrency network. The second part is the publisher library, which can be embedded by any website who want to take part in the universal-pay ecosystem. 
+
+% \subsection{Wallet}
+% \label{sec:wallet}
+% The wallet will be, like all the other parts of the architecture, implemented in standard web technology, which means Javascript. For the convenience of the end user, the wallet will be hosted on a domain to make sure that for the system to work, still no additional configuration is needed. However, this requires trust. If the owner of the domain becomes malicious, the entire wallet might be stolen. Therefore, the user is free to host his own wallet on every desired location, even \textit{localhost} is a possiblity.
+
+% \subsection{Publisher library}
+% Publishers can load an external library into their website, this library communicates with the wallet, as described in \ref{sec:wallet}. When the user visits the page of the publisher, the loaded library will check if there is a wallet running on that local machine. If this is not the case, it will embed the hosted instance of the wallet in an iframe. 
+
+% If the connection with the wallet is established, the publisher will ask the wallet for a payment. The wallet can accept this payment and create a transaction which is sent to the blockchain network.
+
+% \subsection{Communication}
+% One of the challenges with this architecture it the communication and how to make sure a connection is established with a publisher that actually is legit and provides content on the users' computer. 
+
+% In order to make this possible, a structure with WebRTC is proposed. WebRTC is a technology which makes it possible for different websites (even accross different computers) to communicate with eachother. The technology was invented to make real time video and audio communication possible within the browser. However, the API makes it also possible to send data over the channel. 
+
+% \subsection{Micropayments}
