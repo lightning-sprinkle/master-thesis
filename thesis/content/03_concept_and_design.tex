@@ -32,15 +32,11 @@ Fortunately, parallel to this research, a micropament solution based on the Bitc
 
 From the concept point of view, the payment part is a matter of communicating with an API. Nonetheless, are there still some issues with the Lightning Network so that it is not ready to use. One of the main disadvantages of the Lightning Network is that it is not possible to send a transaction to an address directly. By design, a payment should be requested by issuing an invoice. This invoice is written according to a standard format and can be paid using any Lightning Network client. This invoice-based structue suboptimal for the usecase that is needed for this research.
 
-
-
-
-
 \subsection{Localhost approach}
 
 As the concept where WebRTC is applied in order to let the publisher communicate with the system is not viable, this research is extended to other approaches. One approach that is used by other websites to communicate with the users' computer is by running a webserver. This webserver can be accessed from any website by connecting to localhost. For example, the popular video conferencing application Zoom uses this approach so that the application gets opened when a user visits a meeting url \cite{zoomwebserver}.
 
-As this concept is built in combination with the Lighting Network, there needs to be an application running on the users computer anyway. So, this makes it possible to develop one service needs to be installed which both acts like a lightning network client and an interface on localhost to the website that requests a payment.
+As this concept is built in combination with the Lighting Network, there needs to be an application running on the users' computer anyway. So, this makes it possible to develop one service needs to be installed which both acts like a lightning network client and an interface on localhost to the website that requests a payment.
 
 \subsection{Dynamic contribution}
 
