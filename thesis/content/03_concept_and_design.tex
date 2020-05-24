@@ -19,7 +19,11 @@ In order to stick to the zeroconf principle, the system should work out of the b
 
 This concept assumes that there is a system running that handles all the automated payments to the publisher. The first problem that needs to be solved is: how does the website communicate with the system. Installing an add-on in the browser would violate the zeroconf principle, so this approach uses WebRTC as a message bus. Why WebRTC, you might ask? As WebRTC makes it possible for browsers to communicate with eachother, it is also possible to let different websites communicate to eachother in the same browser. Normally, this is not so easy because every website runs in a sandboxed environment. For example, if \textit{derspiegel.de} want to communicate with a system on \textit{payjs.io}, that is only possible if there is a link between both websites, such as an iframe or that one of the websites opened a tab to the other one. 
 
-WebRTC connects to an ip address, so what happens if we connect to localhost? Is it possible to let two websites communicate without a linkt between them? 
+WebRTC connects to an ip address, so what happens if we connect to localhost? Is it possible to let two websites communicate without a link between them? The WebRTC is indeed able to connect to localhost, but in order to do so, a handshake is needed \cite{dutton2013webrtc}. This handshake, however is not specified in the WebRTC protocoll. This means that system can implement its own way of doing so. WebRTC-systems that are applied on the internet are mostly relying on a signaling server, which forwards the handshake. 
+
+During this research, several experiments are performed using WebRTC. Unfortunately, the experiments turned out that it is not possible to connect two websites within one browser directly. A signaling server that is run by a third party stays neccesary. This would introduce a privacy problem, because the third party would be able to find out which publisher is visited from which ip. Therefore, this concept is abandoned in an early stage.
+
+
 
 \subsection{Localhost approach}
 
