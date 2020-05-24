@@ -9,11 +9,17 @@ In the beginning, the main focus laid at privacy issues that are coming with the
 The problem with this concept is actively being researched. For example, it implemented in the Privad system, which can be found in section \ref{sec:privad} system and the Brave browser, which is discussed in section \ref{sec:brave}. Therefore, this concept is abandoned in an early stage.
 
 \section{Universal automated payment solution}
-The second concept, goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in chapter \ref{cha:relatedwork}, the problem with ad networks is that is one of the few revenue models that actually works on the internet.
+The second concept goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in chapter \ref{cha:relatedwork}, the problem with ad networks is that is one of the few revenue models that actually works on the internet.
 
-Several commercial experiments are performed using micropayments, however, as stated in chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction costs that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. 
+Several commercial experiments are performed using micropayments, however, as stated in chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction cost that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. This approach applies the advantage of web advertisements (no browsing interruption) with the benefit of micropayments (no ads). The goal of this concept is to offer such a system with as minimal configuration as possible.
 
 \subsection{WebRTC approach}
+
+In order to stick to the zeroconf principle, the system should work out of the box, no configuration needed, this first approach includes WebRTC. WebRTC is a system that enables two browsers to create a peer to peer connections to eachother.
+
+This concept assumes that there is a system running that handles all the automated payments to the publisher. The first problem that needs to be solved is: how does the website communicate with the system. Installing an add-on in the browser would violate the zeroconf principle, so this approach uses WebRTC as a message bus. Why WebRTC, you might ask? As WebRTC makes it possible for browsers to communicate with eachother, it is also possible to let different websites communicate to eachother in the same browser. Normally, this is not so easy because every website runs in a sandboxed environment. For example, if \textit{derspiegel.de} want to communicate with a system on \textit{payjs.io}, that is only possible if there is a link between both websites, such as an iframe or that one of the websites opened a tab to the other one. 
+
+WebRTC connects to an ip address, so what happens if we connect to localhost? Is it possible to let two websites communicate without a linkt between them? 
 
 \subsection{Localhost approach}
 
