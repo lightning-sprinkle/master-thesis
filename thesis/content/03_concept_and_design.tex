@@ -24,7 +24,6 @@ This concept assumes that there is a system running that handles all the automat
 WebRTC connects to an ip address, so what happens if we connect to localhost? Is it possible to let two websites communicate without a link between them? The WebRTC is indeed able to connect to localhost, but in order to do so, a handshake is needed \cite{dutton2013webrtc}. This handshake, however is not specified in the WebRTC protocoll. This means that system can implement its own way of doing so. WebRTC-systems that are applied on the internet are mostly relying on a signaling server, which forwards the handshake. 
 
 During this research, several experiments are performed using WebRTC. Unfortunately, the experiments turned out that it is not possible to connect two websites within one browser directly. A signaling server that is run by a third party stays neccesary. This would introduce a privacy problem, because the third party would be able to find out which publisher is visited from which ip. Therefore, this concept is abandoned in an early stage.
-
 \subsection{Lightning network}
 
 The aproach above, however, does not include any form of payment. In the first stage, the scope is limited to a universal payment system, without taking care of the payment itself. It is assumed that there is a cryptocurrency solution that can be attached to the universal payment system.
@@ -39,9 +38,11 @@ From the concept point of view, the payment part is a matter of communicating wi
 
 \subsection{Localhost approach}
 
-\subsection{Dynamic contribution}
+As the concept where WebRTC is applied in order to let the publisher communicate with the system is not viable, this research is extended to other approaches. One approach that is used by other websites to communicate with the users' computer is by running a webserver. This webserver can be accessed from any website by connecting to localhost. For example, the popular video conferencing application Zoom uses this approach so that the application gets opened when a user visits a meeting url \cite{zoomwebserver}.
 
-This concept 
+As this concept is built in combination with the Lighting Network, there needs to be an application running on the users computer anyway. So, this makes it possible to develop one service needs to be installed which both acts like a lightning network client and an interface on localhost to the website that requests a payment.
+
+\subsection{Dynamic contribution}
 
 \subsection{DNS TXT-record}
 
