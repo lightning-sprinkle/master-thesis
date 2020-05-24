@@ -11,7 +11,7 @@ The problem with this concept is actively being researched. For example, it impl
 \section{Universal automated payment solution}
 The second concept goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in chapter \ref{cha:relatedwork}, the problem with ad networks is that is one of the few revenue models that actually works on the internet.
 
-Several commercial experiments are performed using micropayments, however, as stated in chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction cost that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. This approach applies the advantage of web advertisements (no browsing interruption) with the benefit of micropayments (no ads). The goal of this concept is to offer such a system with as minimal configuration as possible.
+Several commercial experiments are performed using micropayments, however, as stated in chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction cost that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. This approach applies the advantage of web advertisements (no browsing interruption) with the benefit of micropayments (no ads). It might also be explained as a fair ad blocker. No ads, but also taking care of the revenue of the publisher. The goal of this concept is to offer such a system with as minimal configuration as possible.
 
 Concept: \textit{Distribute a small amount of money over the publishers that you visit and hide the advertisements}
 
@@ -29,11 +29,20 @@ During this research, several experiments are performed using WebRTC. Unfortunat
 
 The aproach above, however, does not include any form of payment. In the first stage, the scope is limited to a universal payment system, without taking care of the payment itself. It is assumed that there is a cryptocurrency solution that can be attached to the universal payment system.
 
-Fortunately, parallel to this research, a micropament solution based on the Bitcoin blockchain is developed. This so-called Lightning Network is discussed in section \ref{sec:lightning} in more detail. The goal of this system is to provide instant micropayments at minimal costs. 
+Fortunately, parallel to this research, a micropament solution based on the Bitcoin blockchain is being actively developed. This so-called Lightning Network is discussed in section \ref{sec:lightning} in more detail. The goal of this system is to provide instant micropayments at minimal costs, which is ideal an automated payment solution.
+
+From the concept point of view, the payment part is a matter of communicating with an API. Nonetheless, are there still some issues with the Lightning Network so that it is not ready to use. One of the main disadvantages of the Lightning Network is that it is not possible to send a transaction to an address directly. By design, a payment should be requested by issuing an invoice. This invoice is written according to a standard format and can be paid using any Lightning Network client. This invoice-based structue suboptimal for the usecase that is needed for this research.
+
+
+
+
 
 \subsection{Localhost approach}
 
 This concept 
+
+\subsubsection{DNS TXT-record}
+
 
 
 
