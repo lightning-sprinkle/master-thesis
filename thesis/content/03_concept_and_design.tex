@@ -40,7 +40,13 @@ As this concept is built in combination with the Lighting Network, there needs t
 
 \subsection{Dynamic contribution}
 
-\subsection{DNS TXT-record}
+\subsection{Wallet address listing}
+
+As described in the Lightning Network concept, there is a possibility to send micropayments to a publisher. The challenge in this case is, how to communicate the wallet address of the publisher to the users' computer? Of course, it is possible to just store it somewhere in a javascript variabele. But some websites are executing user generated content, for example: it is possible to host a website with javascript content on \textit{github.io}. It is not desirable that a fraudulent party spams javascript snippets over the internet that asks for an automated payment without contributing to valueable content. 
+
+One aspect of websites is barely modified by user generated content: DNS records. DNS records are only modifyable by the owner of the domain name, which is in most cases the publisher. One way of storing information in DNS records is to just create a subdomain that contains the content: in this case, the wallet address of the publisher. 
+
+Fortunately, the DNS specification also features a so-called TXT record. This is a record that does not affect the way the domain name is resolved. However, it can be queried and used by other applications. For the automated payment design, the TXT record will be used by the system to provide the wallet address of the publisher, so that it cannot be modified by someone else, other than the owner of the domain name. 
 
 \subsection{Self-signed, DV, OV and EV certificates}
 
@@ -54,26 +60,7 @@ The least secure type of CA certificate is the Domain Validation (DV) certificat
 
 A more secured certificate is the Organization Validation (OV) certificate, also known as a High Assurance certificate. With this type of certificate, the issuer does some background in advance. These background checks include the verification of the information in a third party database, such as a companies house. One other aspect of these certificates is that they are not free, which means that it is less easy to register a bunch of domain names. Major publishers, such as \textit{spiegel.de} are using these OV certificates.
 
-As an extension to the OV certificate, there is also an Extended Validation certification. In the past, this type of certificate was popular amongs banks and government agencies, because it showed the name of the legal entity in the browser when such a certificate was used. 
+As an extension to the OV certificate, there is also an Extended Validation certification. In the past, this type of certificate was popular amongs banks and government agencies, because it showed the name of the legal entity in the browser when such a certificate was used. EV certificates are even more expensive, as the background checks are comprehensive.
 
+These aspects of SSL certificates are very valueable in order to determine the credibilty of a publisher. The default setting of the universal payment solution will be that automated payments are only made to publishers with an OV or EV certificate.
 
-% The proposed solution is an implementation which is completely based on the existing infrastructure that is available on the web. This comes with the advance that it works across all different types of devices, from desktop computers to smartphones. Another feature of this approach is that it does not require any additional tools, which might need some effort tosetup.
-
-% \section{Architecture}
-% There are basically two components in this system: there is a wallet, which takes care of the storage of encryption keys and is responsible for handling all communications with a cryptocurrency network. The second part is the publisher library, which can be embedded by any website who want to take part in the universal-pay ecosystem. 
-
-% \subsection{Wallet}
-% \label{sec:wallet}
-% The wallet will be, like all the other parts of the architecture, implemented in standard web technology, which means Javascript. For the convenience of the end user, the wallet will be hosted on a domain to make sure that for the system to work, still no additional configuration is needed. However, this requires trust. If the owner of the domain becomes malicious, the entire wallet might be stolen. Therefore, the user is free to host his own wallet on every desired location, even \textit{localhost} is a possiblity.
-
-% \subsection{Publisher library}
-% Publishers can load an external library into their website, this library communicates with the wallet, as described in \ref{sec:wallet}. When the user visits the page of the publisher, the loaded library will check if there is a wallet running on that local machine. If this is not the case, it will embed the hosted instance of the wallet in an iframe. 
-
-% If the connection with the wallet is established, the publisher will ask the wallet for a payment. The wallet can accept this payment and create a transaction which is sent to the blockchain network.
-
-% \subsection{Communication}
-% One of the challenges with this architecture it the communication and how to make sure a connection is established with a publisher that actually is legit and provides content on the users' computer. 
-
-% In order to make this possible, a structure with WebRTC is proposed. WebRTC is a technology which makes it possible for different websites (even accross different computers) to communicate with eachother. The technology was invented to make real time video and audio communication possible within the browser. However, the API makes it also possible to send data over the channel. 
-
-% \subsection{Micropayments}
