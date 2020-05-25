@@ -42,13 +42,13 @@ As this concept is built in combination with the Lighting Network, there needs t
 
 \subsection{DNS TXT-record}
 
-\subsection{DV, OV and EV certificates}
+\subsection{Self-signed, DV, OV and EV certificates}
 
 One of the problems with an automated payment system is: how can be determined if a publisher is trustworthy? For example: what happens if some malicious publisher buys a bunch of domain names and opens 50 tabs on the users' computer? Does the system make a payment to all of those 50 domains? 
 
 One approach would be to assign one party that is able to determine which publisher is trustworthy and which one is not. This would violate the decentral principle and is therefore not desirable. Another approach that is discussed is to calculate some kind of score, such as pagerank, and use this score to value the credibility of the publisher. Based on this credibility, a payment might be made or might be adjusted. For example: the domain name \textit{spiegel.de} has a pagerank score of 8/10 where \textit{gartenforum.de} has a pagerank score of 3/10. However, this does not indicate the trustworthyness of a publisher. There is no legitimate reason to pay more to a big publisher that to a small independant content creator. 
 
-
+Fortunately, there is already a worldwide decentral system in place that validates credibility of websites: SSL certificates. SSL certificates, that are needed in order to establish an encrypted connection to a website are also applied to make sure that the user is communicating with the website that it pretents to be. In order to understand this concept, a short introduction to the different types of certificates and architecture is given. First, a certificate needs to be issued by an authority. The credibility of the certifcate is based on this credibility of the issuer. If some publisher issues the certificate by themselves, it is called a self-signed certificate and this provides no creditbility other than that the connection is encrypted, but there is no guarantee that the party on the other end of the line is the party that they are pretending to be. If the issuer is a trusted party, 
 
 
 % The proposed solution is an implementation which is completely based on the existing infrastructure that is available on the web. This comes with the advance that it works across all different types of devices, from desktop computers to smartphones. Another feature of this approach is that it does not require any additional tools, which might need some effort tosetup.
