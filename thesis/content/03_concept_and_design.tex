@@ -12,8 +12,19 @@ The problem with this concept is actively being researched. For example, it impl
 The second concept goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in chapter \ref{cha:relatedwork}, the problem with ad networks is that is one of the few revenue models that actually works on the internet.
 
 Several commercial experiments are performed using micropayments, however, as stated in chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction cost that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. This approach applies the advantage of web advertisements (no browsing interruption) with the benefit of micropayments (no ads). It might also be explained as a fair ad blocker. No ads, but also taking care of the revenue of the publisher. The goal of this concept is to offer such a system with as minimal configuration as possible.
+\vspace{2em}
 
 Concept: \textit{Distribute a small amount of money over the publishers that you visit and hide the advertisements}
+
+\vspace{2em}
+
+Potential challenges:
+\begin{enumerate}
+  \item How to keep the configuration as minimal as possible?
+  \item What design can be applied to operate the system in a decentral way?
+  \item How to determine the amount of contribution?
+  \item How to prevent fraud?
+\end{enumerate}
 
 \subsection{WebRTC approach}
 
@@ -39,6 +50,33 @@ As the concept where WebRTC is applied in order to let the publisher communicate
 As this concept is built in combination with the Lighting Network, there needs to be an application running on the users' computer anyway. So, this makes it possible to develop one service needs to be installed which both acts like a lightning network client and an interface on localhost to the website that requests a payment.
 
 \subsection{Dynamic contribution}
+
+One of the challeges of this concept is to pay a fair share to the publisher. How to determine the amount that is contributed? The general idea is that the amount should be in the same order of magnitude as the revenue when an online advertisement is displayed. Such a display is called an impression in online advertising jargon. The price of such an impression is determined as Price-per-mille (CPM), the price for 1,000 impressions. If a user clicks on an advertisement, the fee is called the cost-per-click (CPC). The amount of users that clicks on the advertisment is expressed in click-throug-rate (CTR) \cite{evans2009online}. For the Google Display Network (which also includes services like Gmail), the following average numbers are available for the first quarter of 2018: 
+
+\begin{itemize}
+  \item CPM: 2.80 USD
+  \item CPC: 0.75 USD
+  \item CTR: 0.35\%
+\end{itemize}
+
+\noindent With this data, it is possible to calculate the average revenue per served ad, which is:
+
+\begin{equation}
+\cfrac{CPM}{1000} + CTR \times CPC = \cfrac{2.80}{1000} + 0.75 \times 0.0035 = 0.005425 ~\text{USD}
+\end{equation}
+
+\noindent In order to estimate the online ad revenue per user per month, this revenue is multiplied with the average amount of ads that are served to a user, which is around 1,700 \cite{papadopoulos2018cost}. 
+
+\begin{equation}
+  \text{revenue per ad} \times \text{impressions per month} = 0.005425 \times 1,700 = 9.22 ~\text{USD}
+\end{equation}
+This gives us an average revenue per internet user of USD per month and does not include the margin of the advertising networks.
+
+
+
+
+
+
 
 \subsection{Wallet address listing}
 
