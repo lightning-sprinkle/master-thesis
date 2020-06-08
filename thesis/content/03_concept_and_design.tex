@@ -27,7 +27,7 @@ Potential challenges:
 \end{enumerate}
 
 \subsection{WebRTC approach}
-
+\label{sec:webrtc}
 In order to stick to the zeroconf principle, the system should work out of the box, no configuration needed, this first approach includes WebRTC. WebRTC is a system that enables two browsers to create a peer to peer connections to eachother.
 
 This concept assumes that there is a system running that handles all the automated payments to the publisher. The first problem that needs to be solved is: how does the website communicate with the system. Installing an add-on in the browser would violate the zeroconf principle, so this approach uses WebRTC as a message bus. Why WebRTC, you might ask? As WebRTC makes it possible for browsers to communicate with eachother, it is also possible to let different websites communicate to eachother in the same browser. Normally, this is not so easy because every website runs in a sandboxed environment. For example, if \textit{derspiegel.de} want to communicate with a system on \textit{payjs.io}, that is only possible if there is a link between both websites, such as an iframe or that one of the websites opened a tab to the other one. 

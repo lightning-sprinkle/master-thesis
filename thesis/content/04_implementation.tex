@@ -1,4 +1,21 @@
 \chapter{Implementation}
 \label{cha:implementation}
 
-Describe the details of the actual implementation here...
+The goal of this thesis is not only to come up with a concept that might work in practice: in order to prove the concept, this research consist also out of a working proof on concept. All source code of the proof of concept is released under the MIT licence, including the latex source code of this master thesis\footnote{\url{https://github.com/lightning-sprinkle}}.
+
+\section{Universal automated payment solution}
+The proof of concept that is developed is called Lightning Sprinkle. This name comes from two aspects of this system. Firstly, it uses the Lighting Network as a micropayment processor. Most of the systems related to the Lightning Network are referencing so in their name. Secondly, sprinkle comes from the verb sprinkling, which is used in the story of Hansel und Gretel by the Brother Grimm. In this story, Hansel und Gretel are walking away from home and sprinkling bread crumbs along their path. Just like the system leaves a trail of small payment along the browsing path. 
+
+The remainder of this chapter, the following references will be used:
+
+\begin{description}
+  \item[Lightning Sprinkle User Service] \hfill \\ A service that runs on the users' computer that handles the payments.
+  \item[Lightning Sprinkle Publisher Lib] \hfill \\ A Javascript library that is implemented by the publisher in order to request the payment.
+\end{description} 
+
+
+
+\subsection{WebRTC approach}
+According to the concept, as discussed in section \ref{sec:webrtc}, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Normally it is not easy to communicate with services that are running on the users' computer because, this might introduce security flaws as this makes the computer exposed to any script on any website that is visited. 
+
+WebRTC enables peer to peer connections between any website or server, which also includes connections between websites and services on one computer. The main idea is to do some local port scanning in order to search for 
