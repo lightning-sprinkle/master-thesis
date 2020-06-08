@@ -13,9 +13,9 @@ The remainder of this chapter, the following references will be used:
   \item[Lightning Sprinkle Publisher Lib] \hfill \\ A Javascript library that is implemented by the publisher in order to request the payment.
 \end{description} 
 
-
-
 \subsection{WebRTC approach}
 According to the concept, as discussed in section \ref{sec:webrtc}, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Normally it is not easy to communicate with services that are running on the users' computer because, this might introduce security flaws as this makes the computer exposed to any script on any website that is visited. 
 
-WebRTC enables peer to peer connections between any website or server, which also includes connections between websites and services on one computer. The main idea is to do some local port scanning in order to search for 
+WebRTC enables peer to peer connections between any website or server, which also includes connections between websites and services on one computer. The main idea is that the Publisher Lib does some port scanning on the users' computer and connects to the User Service.
+
+During the implementation, it turned out that it is impossible to create a webRTC connection between two instances directly. Compared to traditional TCP connections, it is not possible to connect to an arbitrary port without a proper handshake on beforehand. The handshake and discovery process as implemented in the webRTC protocol is called signaling. 
