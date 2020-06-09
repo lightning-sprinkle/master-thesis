@@ -1,5 +1,7 @@
 {
   "ltex.en-US.disabledRules": [
-    "MORFOLOGIK_RULE_EN_US"
-  ]
+  ],
+  "ltex.disabledRules": {
+  
+  }
 }
