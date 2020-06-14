@@ -33,7 +33,19 @@ On the basis of advancing insights, during experiments with the Lightning Networ
 
 Another approach to the problem of connecting from the publisher library to the user service is the using localhost. The idea stems from how the videoconferencing tool Zoom connects to their software from an arbitrary website. The principle relies on the fact that it is possible to load content from websites that are hosted on another domain, this also includes localhost.
 
-In practice, any website can connect to any other domain. Examples of application can be found in abundance in web tracking. For example, if a user visits a website that uses third party tracking, a request is made to the third party from the users' computer. 
+In practice, any website can connect to any other domain. Examples of application can be found in abundance in web tracking. For example, if a user visits a website that uses third party tracking, a request is made to the third party from the users' computer to send data, such as tracking cookies, to the ad network. 
+
+This implementation aims to make it possible for the publisher lib to connect to the user service on the local machine in order to request an automated payment. The user service includes a web server that can be accessed by the publisher lib.
+
+The ability to create requests to different domains introduces plenty of security issues. It might leak data that is only intended for the uses on other domains or even trigger an action on another website. This is known as cross site scripting (XSS) vulnerabilities. Therefore, browsers have taken security measures in order to prevent these undesired side effects.
+
+Firstly, as a website, it is possible to configure the Cross-Origin Resource Sharing (CORS). This parameter can limit the websites that are allowed to send a request to them. Secondly, so-called mixed content is not allowed. This means that if the website runs on https and initiates a request to a third party that is on http, the request is blocked by the browser. Thirdly, Chrome is actively blocking request to localhost, as this might expose services that are running on the local machine.
+
+The first security measure can be circumvented easily by setting \\\texttt{Access-Control-Allow-Origin:*}, which means that any publisher using the Publisher Lib is able to connect to User Service. 
+
+The second measure is harder to circumvent. As of 2020, every self-respecting website uses https, so not supporting the Publisher Lib on https websites is not possible. There are a couple of ways to make is still possible to support https enabled publishers to connect to localhost:
+ 
+Firstly, the User Service can support https, so that is will not be an issue anymore. However, in order to support https, there needs to be a certificate that is used to encrypt the traffic to localhost. Such a certificate can only be issued if there is a domain name used. With localhost, this is not the case. So, the only option is to generate a self-signed certificate. Self-signed certificates, however, are not trusted by browsers, so requests are still blocked. To support this self-signed certificate, the user needs to make an exception in the browser for this particular certificate. This method is not very user-friendly and violates the zeroconf principle, which makes it suboptimal. 
 
 
 
