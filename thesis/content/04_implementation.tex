@@ -77,12 +77,24 @@ In order to run a lightning node, which is a client that is part of the network,
 
 Firstly, there is a normal bitcoin client needed, so that it is possible to communicate with the bitcoin network and perform transactions on the blockchain. This bitcoin client also takes care of the private keys that are needed to sign any transaction.
 
-Secondly, there needs to be a lightning network client. This client handles all the communications with the lightning network, and also interacts with the bitcoin client in order to open or close channels. 
+Secondly, there needs to be a lightning network node. This client handles all the communications with the lightning network, and also interacts with the bitcoin client in order to open or close channels. 
 
 Thirdly, as all the transactions that occur over the lightning network are easy to follow, there needs to be some form of obfuscation. Otherwise, it will be easy to link an IP address to a lightning transaction.
 
-\subsection{Node-launcher}
-The node-launcher can be described as package bundle with all the components listed above, written in Python. It takes care that all the components are configured correctly.
+\begin{figure}[h!]
+  \setlength{\fboxsep}{0pt}%
+  \center
+  \fbox{\includegraphics[width=15em]{images/node-launcher.png}}
+  \caption{The node-launcher application}
+\end{figure}
+
+The node-launcher can be described as package bundle with all the components listed above, written in Python. It takes care that all the components are configured correctly and are up and running. It also features a tray application that shows the status of the application. In the first phase, this application is adopted as a lighting network solution as this application is easily modifiable.
+
+When the node-launcher is running, there is no interface to interact with the lightning network node. It is up to the user to install a front-end that interacts with the lightning node. 
 
 
+
+\section{Lightning Sprinkle User Service}
+
+The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
 
