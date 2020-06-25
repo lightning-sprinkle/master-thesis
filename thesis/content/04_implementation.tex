@@ -73,7 +73,16 @@ Now there is an ecosystem that enables publishers to communicate with a service 
 
 The lightning network is not a single implementation. The creators of the lightning network decided to create a request for comments (RFC) instead. This RFC describes how the network should function and by what rules. Several other parties are implementing clients that follow these standard. However, because of the current work-in-progress state of the system, there are small differences between the clients and even between different versions of clients. 
 
+In order to run a lightning node, which is a client that is part of the network, there is an application with multiple components needed. 
+
+Firstly, there is a normal bitcoin client needed, so that it is possible to communicate with the bitcoin network and perform transactions on the blockchain. This bitcoin client also takes care of the private keys that are needed to sign any transaction.
+
+Secondly, there needs to be a lightning network client. This client handles all the communications with the lightning network, and also interacts with the bitcoin client in order to open or close channels. 
+
+Thirdly, as all the transactions that occur over the lightning network are easy to follow, there needs to be some form of obfuscation. Otherwise, it will be easy to link an IP address to a lightning transaction.
+
 \subsection{Node-launcher}
+The node-launcher can be described as package bundle with all the components listed above, written in Python. It takes care that all the components are configured correctly.
 
 
 
