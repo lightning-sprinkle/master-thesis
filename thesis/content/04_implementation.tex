@@ -35,6 +35,7 @@ Using this message system, it is possible for the Publisher Library to communica
 On the basis of advancing insights, during experiments with the Lightning Network. It turns out that it is not feasible to create a system that runs completely inside the web ecosystem. Therefore, this approach is limited to the exploration phase and not implemented in a prototype.
 
 \subsubsection{Localhost}
+\label{sec:localhost}
 
 The final approach to the problem of connecting from the publisher library to the user service is the using localhost. The idea stems from how the videoconferencing tool Zoom connects to their software from an arbitrary website. The principle relies on the fact that it is possible to load content from websites that are hosted on another domain, this also includes localhost.
 
@@ -111,3 +112,22 @@ Firstly, the server part functions as web server. There are three different API-
 
 Secondly, the reward module keeps track of the budget. Based on a maximal hourly reward, the fee is calculated and used in the micropayments.
 
+Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in section \ref{sec:localhost}.
+
+Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
+
+Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in javascript introduces potential vulnerabilities as user generated content is able to alter javascript. Therefore, the service relies on TXT-records that are stored at the DNS server, so that is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
+
+\texttt{lnd-pubkey=027d2456f6d4aaf27873b68b7717c...}
+
+Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
+
+SSL certificates are structured according to the X509 format. Such a certificate contains basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before they were used for HTTPS, it does not have any store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, is uses a certificate extension called CertificatePolicies. The following policies with corresponding object ids are used for the different types of certificates:
+
+\begin{enumerate}[leftmargin=8em]
+  \item[2.23.140.1.2.1] Domain Validation
+  \item[2.23.140.1.2.2] Organization Validation
+  \item[2.23.140.1.1] Extended Validation
+\end{enumerate}
+
+By extracting these Certificate Policies, it is possible to determine the type of certificate that a particular domain name uses. 
