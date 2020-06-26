@@ -95,5 +95,19 @@ When the node-launcher is running, there is no interface to interact with the li
 
 \section{Lightning Sprinkle User Service}
 
-The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
+The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in Python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
+
+This application consists out of six modules:
+\begin{enumerate}
+  \item server
+  \item reward
+  \item status image
+  \item lnd
+  \item dns
+  \item cert 
+\end{enumerate}
+
+Firstly, the server part functions as web server. There are three different API-endpoints: status, request-permission and request-payment. The status endpoint returns whether the origin domain of the request is allowed to request payments. The request-permission endpoint is used to add the origin domain to the whitelist. Lastly, the request-payment endpoint is used to request and execute the automated payment.
+
+Secondly, the reward module keeps track of the budget. Based on a maximal hourly reward, the fee is calculated and used in the micropayments.
 
