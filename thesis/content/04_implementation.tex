@@ -172,11 +172,7 @@ Secondly, the reward module keeps track of the budget. Based on a maximal hourly
 
 Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in section \ref{sec:localhost}.
 
-<<<<<<< HEAD
 Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
-=======
-Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{} (werkende link?). In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. They are implemented in such a way that different types of macaroons provide different levels of privileges. 
->>>>>>> a5531ac... Update 04_implementation.tex
 
 Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in javascript, introduces potential vulnerabilities as user generated content is able to alter javascript. Therefore, the service relies on TXT-records that are stored at the DNS server. In this way it is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
 
