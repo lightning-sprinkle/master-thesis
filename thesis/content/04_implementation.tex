@@ -151,6 +151,7 @@ def keysend_money(dest, amt):
 Interestingly, the custom record functionality is also implemented quite recently. One of the use cases for these custom records are to exchange chat messages over the lightning network (whatsat), so that it acts like a decentral messaging service. 
 
 
+
 \subsection{Lightning Sprinkle User Service}
 
 The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in Python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
@@ -171,15 +172,19 @@ Secondly, the reward module keeps track of the budget. Based on a maximal hourly
 
 Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in section \ref{sec:localhost}.
 
+<<<<<<< HEAD
 Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
+=======
+Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{} (werkende link?). In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. They are implemented in such a way that different types of macaroons provide different levels of privileges. 
+>>>>>>> a5531ac... Update 04_implementation.tex
 
-Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in javascript introduces potential vulnerabilities as user generated content is able to alter javascript. Therefore, the service relies on TXT-records that are stored at the DNS server, so that is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
+Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in javascript, introduces potential vulnerabilities as user generated content is able to alter javascript. Therefore, the service relies on TXT-records that are stored at the DNS server. In this way it is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
 
 \texttt{lnd-pubkey=027d2456f6d4aaf27873b68b7717b...}
 
 Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
 
-SSL certificates are structured according to the X509 format. Such a certificate contains basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before they were used for HTTPS, it does not have any store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, is uses a certificate extension called CertificatePolicies. The following policies with corresponding object ids are used for the different types of certificates:
+SSL certificates are structured according to the X509 format. Such/These certificates contains basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before they were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, it/X509 uses a certificate extension called CertificatePolicies. The following policies with corresponding object ids/IDs? are used for the different types of certificates:
 
 \begin{enumerate}[leftmargin=8em]
   \item[2.23.140.1.2.1] Domain Validation
