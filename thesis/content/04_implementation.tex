@@ -93,6 +93,14 @@ The node-launcher can be described as package bundle with all the components lis
 
 When the node-launcher is running, there is no interface to interact with the lightning network node. It is up to the user to install a front-end that interacts with the lightning node. Examples of these front-ends are the Zap wallet\footnote{\url{https://github.com/LN-Zap/lnd}} or the Joule Browser Extension\footnote{\url{https://github.com/joule-labs/joule-extension}}. For this thesis, however, there is no need for a front-end, as the Lightning Sprinkle User Service is able to interact with then lightning node directly. 
 
+The design of a lightning network transaction is based on a one-time invoice structure. The receiver of the payment needs to create such an invoice first, which will be transmitted in the form of an encoded string or QR-code. This invoice contains details like, the amount, the payee public key, routing hints and an expiration date. The payor opens this invoice in the lighting network node application, and is able to submit the payment.
+
+Due to this structure, it is very hard to make spontaneous payments. When selling products online, this is not an issue, but for other things than goods and services, this is not ideal. For example, with donations. Currently, there are services that offer to create a lightning network donate button that creates a new invoice every time it is accessed. Under the hood, these services are connecting to the lightning network node of the payee and requesting a new invoice every time. For the purpose of this thesis, this is far from ideal, because that means that with every visit of a website, there are multiple other requests needed in order to exchange the invoice. 
+
+As of 2020, the lightning network is still in an experimental phase and under active development. During the implementation phase of this thesis, the team behind the lnd client explored a way to circumvent the invoice structure\footnote{\url{https://github.com/lightningnetwork/lnd/pull/3795}}. This feature is not part of the official lightning network specification, therefore it is not widely supported. During this implementation phase, it was only possible to experiment with it using the latest beta of the lnd client. 
+
+Normally, 
+
 
 \section{Lightning Sprinkle User Service}
 
@@ -131,3 +139,4 @@ SSL certificates are structured according to the X509 format. Such a certificate
 \end{enumerate}
 
 By extracting these Certificate Policies, it is possible to determine the type of certificate that a particular domain name uses. 
+
