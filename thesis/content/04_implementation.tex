@@ -182,7 +182,7 @@ SSL certificates are structured according to the X509 format. Such a certificate
 
 By extracting these Certificate Policies, it is possible to determine the type of certificate that a particular domain name uses. 
 
-\subsection{Electron tray application and neutrino}
+\subsection{Electron tray application and Neutrino}
 The first proof-of-concept, as described in section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entire bitcoin blockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
 
 However, there are also so-called light wallets available, these wallets do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the users, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that include the transactions of the user for certain. Because not only the transactions for the user are downloaded, the privacy of the user is preserved. 
@@ -203,7 +203,7 @@ In electron, it is also possible to create a tray application, so that the appli
 
 However, as the thesis is only about developing a proof-of-concept and the translation to javascript/electron took more time than expected, them development of this alternative implementation is not continued.
 
-\subsection{Example website with Google Analytics}
+\subsection{Example website with Google AdSense}
 In order to demonstrate the project, a small static website is set up using an open source template. This example website show how a publisher can implement the Lightning Sprinkle Publisher Library. 
 
 To make the example as real life as possible, the Google AdSense program is joined, so that Google is able to serve real advertisements on the example website. 
@@ -222,8 +222,10 @@ One problem with such a third party supplier of advertisements, is that normally
 
 Using this unsupported method, it becomes possible to let the user decide if he or she wants to see advertisements or allow the publisher to request automated payments instead.
 
+The purple bar on the bottom of the example website is placed there by the Lightning Sprinkle Publisher Library. The button in the bottom can be used to add the publisher to the whitelist.
+
 \begin{figure}[h!]
   \setlength{\fboxsep}{0pt}%
   \fbox{\includegraphics[width=\textwidth-2px]{images/example-website.png}}
-  \caption{Example website that implement Lightning Sprinkle Publisher Library}
+  \caption{Example website with ads that implements the Lightning Sprinkle Publisher Library}
 \end{figure}
