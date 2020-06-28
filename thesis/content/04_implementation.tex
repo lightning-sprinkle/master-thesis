@@ -187,7 +187,22 @@ The first proof-of-concept, as described in section \ref{sec:lightningnetwork}, 
 
 However, there are also so-called light wallets available, these wallets do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the users, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that include the transactions of the user for certain. Because not only the transactions for the user are downloaded, the privacy of the user is preserved. 
 
-The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet. Which makes it much less of a hassle to setup a lightning node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an auto pilot mode, where it automatically opens lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
+The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet. Which makes it much less of a hassle to set up a lightning node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an auto pilot mode, where it automatically opens lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
+
+In the second phase of the implementation, two new aspects of this system are introduced: the transition to javascript/electron and the use of the neutrino bitcoin light wallet.
+
+In electron, it is also possible to create a tray application, so that the application keeps running when closed. 
+
+
+\begin{figure}[h!]
+  \setlength{\fboxsep}{0pt}%
+  \center
+  \fbox{\includegraphics[width=20em]{images/electron-tray.png}}
+  \caption{The Lightning Sprinkle Tray Application}
+\end{figure}
+
+
+
 
 
 \section{Example website with Google Analytics}
