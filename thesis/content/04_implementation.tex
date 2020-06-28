@@ -1,15 +1,15 @@
 \chapter{Implementation}
 \label{cha:implementation}
 
-The goal of this thesis is not only to come up with a concept that might work in practice: in order to prove the concept, this research consist out of a working proof on concept. All source code of the proof of concept is released under the MIT licence, including the latex source code of this master thesis\footnote{\url{https://github.com/lightning-sprinkle}}.
+The goal of this thesis is not only to come up with a concept that might work in practice: in order to prove the concept, this research consists out of a working proof on concept. All source code of the proof of concept is released under the MIT licence, including the latex source code of this master thesis\footnote{\url{https://github.com/lightning-sprinkle}}.
 
 \section{Universal automated payment solution}
-The proof of concept that is developed is called Lightning Sprinkle. This name comes from two aspects of this system. Firstly, it uses the Lighting Network as a micropayment processor. Most systems related to the Lightning Network are referencing so in their name. Secondly, sprinkle comes from the verb sprinkling, which is used in the story of Hansel und Gretel by the Brothers Grimm. In this story, Hansel und Gretel are walking away from home and sprinkling bread crumbs along their path. Just like the system leaves a trail of small payment along the browsing path.
+The proof of concept that is developed is called Lightning Sprinkle. This name comes from two aspects of this system. Firstly, it uses the Lighting Network as a micropayment processor. Most systems related to the Lightning Network are referencing/referring so in their name. Secondly, sprinkle comes from the verb sprinkling, which is used in the fairy tale of Hansel and Gretel by the Brothers Grimm. In this story, Hansel and Gretel are walking away from home and sprinkling breadcrumbs along their path. Just like this, the sprinkle system leaves a trail of small payments along the browsing path.
 \begin{figure}[h!]
   \includegraphics[width=\textwidth]{images/implementation.pdf}
   \caption{Schematic overview}
 \end{figure}
-In the remainder of this chapter, the following references will are used:
+In the remainder of this chapter, the following references are used:
 
 \begin{description}
   \item[Lightning Sprinkle User Service] \hfill \\ A service that runs on the users' computer that handles the payments.
@@ -17,43 +17,45 @@ In the remainder of this chapter, the following references will are used:
 \end{description} 
 
 \subsection{Lightning Sprinkle Publisher Library}
-According to the concept, as discussed in section \ref{sec:webrtc}, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Normally it is not easy to communicate with services that are running on the users' computer because, this might introduce security flaws as this makes the computer exposed to any script on any website that is visited. The standard way of interaction between the website and other software on the computer is using a browser extension. This adds an extra step in the installation process. Therefore, other ways of interaction are researched.
+According to the concept, as discussed in section \ref{sec:webrtc}, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Normally it is not easy to communicate with services that are running on the users' computer, because this might introduce security flaws as this makes the computer exposed to any script on any website that is visited. The standard way of interaction between the website and other software on the computer is using a browser extension. This, however, adds an extra step in the installation process. Therefore, other ways of interaction are researched.
 
 \subsubsection{WebRTC}
 
 WebRTC enables peer to peer connections between any website or server, which also includes connections between websites and services on one computer. The main idea is that the Publisher Library does some port scanning on the users' computer and connects to the User Service.
 
-During the implementation, it turned out that it is impossible to create a webRTC connection between two instances directly. Compared to traditional TCP connections, it is not possible to connect to an arbitrary port without a proper handshake on beforehand. The handshake and discovery process as implemented in the webRTC protocol is called signaling. Normally, this handshake is handeld by a signaling server that functions as a handshake broker.
+During the implementation, it turned out that it is impossible to create a webRTC connection between two instances directly. Compared to traditional TCP connections, it is not possible to connect to an arbitrary port without a proper handshake beforehand. The handshake and discovery process as implemented in the webRTC protocol is called signaling. Normally, this handshake is handled by a signaling server that functions as a handshake broker.
 
 Unfortunately, introducing a central authority that handles the handshakes would disrupt the decental aspect of the entire system. Several alternatives are discussed, such as creating a decentral network of signaling servers, however this would make the situation far more complex for such a small part of the entire ecosystem. Therefore, this approach is abandoned after a few experiments.
 
 \subsubsection{postMessage()}
-A different method of passing messages between different websites is the \textit{postMessage} functionality in Javascript. This makes it possible to interact with different websites. In order to use the \textit{postMessage} method, there needs to be a link between both websites. Such a link only exists when there one website is opened by another. This happens for example when website A opens website B in a new window or tab. The same link also exists when website B is loaded into an iFrame. 
+A different method of passing messages between different websites is the \textit{postMessage} functionality in Javascript. This makes it possible to interact with different websites. In order to use the \textit{postMessage} method, there needs to be a link between both websites. Such a link only exists when one website is opened by another. This happens for example when website A opens website B in a new window or tab. The same link also exists when website B is loaded into an iFrame. 
 
 Using this message system, it is possible for the Publisher Library to communicate with an instance of the User Service. The disadvantage of this approach is that it is limited to the web ecosystem: messages can only be transmitted to other websites, not to services that are running on the users' computer. 
 
-On the basis of advancing insights, during experiments with the Lightning Network. It turns out that it is not feasible to create a system that runs completely inside the web ecosystem. Therefore, this approach is limited to the exploration phase and not implemented in a prototype.
+On the basis of advancing insights, during experiments with the Lightning Network, it turned out that it is not feasible to create a system that runs completely inside the web ecosystem. Therefore, this approach is limited to the exploration phase and not implemented in a/the prototype.
 
 \subsubsection{Localhost}
 \label{sec:localhost}
 
-The final approach to the problem of connecting from the publisher library to the user service is the using localhost. The idea stems from how the videoconferencing tool Zoom connects to their software from an arbitrary website. The principle relies on the fact that it is possible to load content from websites that are hosted on another domain, this also includes localhost.
+The final approach to the problem of connecting from the publisher library to the user service is using localhost. The idea stems from how the videoconferencing tool Zoom connects to their software from an arbitrary website. The principle relies/builds on the fact that it is possible to load content from websites that are hosted on another domain. This also includes localhost.
 
-In practice, any website can connect to any other domain. Examples of application can be found in abundance in web tracking. For example, if a user visits a website that uses third party tracking, a request is made to the third party from the users' computer to send data, such as tracking cookies, to the ad network. 
+In practice, any website can connect to any other domain. Examples of application can be found in abundance in/of web tracking. For example, if a user visits a website that uses third party tracking, a request is made to the third party from the users' computer to send data, such as tracking cookies, to the ad network. 
 
 This implementation aims to make it possible for the publisher library to connect to the user service on the local machine in order to request an automated payment. The user service includes a web server that can be accessed by the publisher library. 
 
-The ability to create requests to different domains introduces plenty of security issues. It might leak data that is only intended for the uses on other domains or even trigger an action on another website. This is known as cross site scripting (XSS) vulnerabilities. Therefore, browsers have taken security measures in order to prevent these undesired side effects.
+The ability to create requests to different domains introduces plenty of security issues. It might leak data that is only intended for the uses/use/users on other domains or even trigger an action on another website. This is known as cross site scripting (XSS) vulnerabilities. Therefore, browsers have taken security measures in order to prevent these undesired side effects.
 
-Firstly, as a website, it is possible to configure the Cross-Origin Resource Sharing (CORS). This parameter can limit the websites that are allowed to send a request to them. Secondly, so-called mixed content is not allowed. This means that if the website runs on https and initiates a request to a third party that is on http, the request is blocked by the browser. Thirdly, Chrome is actively blocking request to localhost, as this might expose services that are running on the local machine.
+Firstly, as a website, it is possible to configure the Cross-Origin Resource Sharing (CORS). This parameter can limit the amount of websites that are allowed to send a request to them. Secondly, so-called mixed content is not allowed. This means that if the website runs on https and initiates a request to a third party that is on http, the request is blocked by the browser. Thirdly, Chrome is actively blocking any requests to localhost, as this might expose services that are running on the local machine.
 
 The first security measure can be circumvented easily by setting \\\texttt{Access-Control-Allow-Origin:*}, which means that any publisher using the Publisher Library is able to connect to the User Service. 
 
-The second measure is harder to circumvent. As of 2020, every self-respecting website uses https, so not supporting the Publisher Library on https websites is not possible. There are a couple of ways to make is still possible to support https enabled publishers to connect to localhost:
- 
-Firstly, the User Service can support https, so that is will not be an issue anymore. However, in order to support https, there needs to be a certificate that is used to encrypt the traffic to localhost. Such a certificate can only be issued if there is a domain name used. With localhost, this is not the case. So, the only option is to generate a self-signed certificate. Self-signed certificates, however, are not trusted by browsers, so requests are still blocked. To support this self-signed certificate, the user needs to make an exception in the browser for this particular certificate. This method is not very user-friendly and violates the zeroconf principle, which makes it suboptimal.
+The second measure is harder to circumvent. As of 2020, every self-respecting website uses https, so it is not/im-possible to not support the Publisher Library on https websites. /so not supporting the Publisher Library on https websites is not possible. There are a couple of ways to make it still/zonder still possible to support https enabled publishers to connect to localhost:
 
-Secondly, there is an exception for media content that is being loaded from external resources. The standard way of performing requests to anot-her website from Javascript is using an \texttt{XMLHttpRequest}, but these requests are facing limitations like the one described above. When a website just embeds an image from another website, there are very little limitations. Fortunately, it is possible to load an image in a programmed way and transfer data using this image.
+%twijfel over deze dubbele punt. En daarnaast: de eerste zin hieronder is nogal abrupt: ineens is het probleem opgelost. Twijfel of je daar iets meer woorden aan vuil moet maken.
+ 
+Firstly, the User Service can support https, so that is not an issue anymore. However, in order to support https, there needs to be a certificate that is used to encrypt the traffic to localhost. Such a certificate can only be issued if a domain name is used. With localhost, this is not the case. So, the only option is to generate a self-signed certificate. Self-signed certificates, however, are not trusted by browsers, so requests are still blocked. To support this self-signed certificate, the user needs to make an exception in the browser for this particular certificate. This method is not very user-friendly and violates the zeroconf principle, which makes it suboptimal.
+
+Secondly, there is an exception/ an exception is made (by XXX) for media content that is being loaded from external resources. The standard way of performing requests to another website from Javascript is using an \texttt{XMLHttpRequest}, but these requests are facing limitations like the one described above/like the one on self-signed certificates. However/On the other hand? When a website just embeds an image from another website, there are very little limitations. Fortunately, it is possible to load an image in a programmed way and transfer data using this image.
 
 The implementation is quite simple: the Publisher Library loads an image that is located on localhost, for example: \texttt{http://localhost:28373/status}. Then the User Service receives the request and is able to answer with an image. The content of the image is hard to parse in the Publisher Library, but metadata like the dimensions of the image is easy to read. Using this approach, there is a two-way communication possible between the Publisher Library and the User Service. The User Service responds to the request by sending an image with a particular dimension. In this case, for example, responding with an image that has a width of 2, means that the system is running and the publisher is approved.
 
