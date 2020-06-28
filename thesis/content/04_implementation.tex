@@ -170,7 +170,7 @@ Fourthly, the lnd module handles the communication with the lightning network no
 
 Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in javascript introduces potential vulnerabilities as user generated content is able to alter javascript. Therefore, the service relies on TXT-records that are stored at the DNS server, so that is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
 
-\texttt{lnd-pubkey=027d2456f6d4aaf27873b68b7717c...}
+\texttt{lnd-pubkey=027d2456f6d4aaf27873b68b7717b...}
 
 Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
 
