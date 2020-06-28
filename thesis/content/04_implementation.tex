@@ -193,9 +193,9 @@ By extracting these Certificate Policies, it is possible to determine the type o
 \subsection{Electron tray application and Neutrino}
 The first proof-of-concept, as described in section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entire bitcoin blockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
 
-However, there are also so-called light wallets available, these wallets do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the users, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that include the transactions of the user for certain. Because not only the transactions for the user are downloaded, the privacy of the user is preserved. 
+However, there are also so-called light wallets available, which/. These wallets/these wallets do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user(s), bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at leat include the transactions of the user. However, because not only the transactions of the user are downloaded, but also some transaction of several other users, the privacy of the user is preserved/guaranteed?
 
-The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet. Which makes it much less of a hassle to set up a lightning node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an auto pilot mode, where it automatically opens lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
+The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet, which makes it much less of a hassle to set up a lightning node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an auto pilot mode, where it automatically opens lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
 
 In the second phase of the implementation, two new aspects of this system are introduced: the transition to javascript/electron and the use of the neutrino bitcoin light wallet.
 
@@ -209,14 +209,14 @@ In electron, it is also possible to create a tray application, so that the appli
   \caption{The Lightning Sprinkle Tray Application}
 \end{figure}
 
-However, as the thesis is only about developing a proof-of-concept and the translation to javascript/electron took more time than expected, them development of this alternative implementation is not continued.
+However, as the thesis is only about developing a proof-of-concept and the translation to javascript/electron took more time than expected, the development of this alternative implementation is not continued.
 
 \subsection{Example website with Google AdSense}
-In order to demonstrate the project, a small static website is set up using an open source template. This example website show how a publisher can implement the Lightning Sprinkle Publisher Library. 
+In order to demonstrate the project, a small static website is set up using an open source template. This example website/demo website? shows how a publisher can implement the Lightning Sprinkle Publisher Library. 
 
-To make the example as real life as possible, the Google AdSense program is joined, so that Google is able to serve real advertisements on the example website. 
+To make the example as real life/realistic as possible, the Google AdSense program is joined/added? (if: joined, dan even zin mooi maken), so that Google is able to serve real advertisements on the example website. 
 
-One problem with such a third party supplier of advertisements, is that normally there is no toggle to disable the advertisements other than not loading the Javascript library of the advertisement network. Unofficially, however, it is possible to disable advertisements in the same way they are blocked by an Ad Blocker: by removing certain objects from the DOM. For Google AdSense, this is done by the following simple Javascript line:
+One problem with such (wie? google? even noemen) a third party supplier of advertisements, is that normally there is no toggle to disable the advertisements other than not loading the Javascript library of the advertisement network. Unofficially, however, it is possible to disable advertisements in the same way they are blocked by an Ad Blocker: by removing certain objects from the DOM. For Google AdSense, this is done by the following simple Javascript line:
 
 
 \lstset{language=Javascript}
@@ -228,9 +228,9 @@ One problem with such a third party supplier of advertisements, is that normally
   $('.adsbygoogle').remove()
 \end{lstlisting}
 
-Using this unsupported method, it becomes possible to let the user decide if he or she wants to see advertisements or allow the publisher to request automated payments instead.
+Using this unsupported/unofficial? method, it becomes possible to let the user decide if he or she either wants to see advertisements or to allow the publisher to request automated payments instead.
 
-The purple bar on the bottom of the example website is placed there by the Lightning Sprinkle Publisher Library. The button in the bottom can be used to add the publisher to the whitelist.
+The purple bar on the bottom of the example website is placed there/shown/implemented/...? by the Lightning Sprinkle Publisher Library. The button in the bottom (in the bottom klinkt raar. at the bottom? Of heeft de button een bepaald teken?) can be used to add the publisher to the whitelist.
 
 \begin{figure}[h!]
   \setlength{\fboxsep}{0pt}%
