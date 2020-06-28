@@ -68,7 +68,7 @@ The system that asks for permission also relies on the web ecosystem. The publis
   \caption{Popup that asks for permission}
 \end{figure}
 
-\section{Lightning Network}
+\subsection{Lightning Network}
 \label{sec:lightningnetwork}
 
 Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, needs to make a micropayment somehow. As discussed in the chapter \ref{cha:relatedwork}, existing payment service providers are not suitable as it would violate the decentral principle. Therefore, the landscape of cryptocurrencies suitable for micropayments is researched. It turned out that the lightning network is the most promising solution, as it relies on the cryptocurrency with the largest market cap and is still able to process instant payments with minimal fees. The principle of the lightning network is already explained in chapter \ref{cha:conceptanddesign}. This section will explain what challenges there were during the implementation of the proof-of-concept.
@@ -144,7 +144,7 @@ def keysend_money(dest, amt):
 Interestingly, the custom record functionality is also implemented quite recently. One of the use cases for these custom records are to exchange chat messages over the lightning network (whatsat), so that it acts like a decentral messaging service. 
 
 
-\section{Lightning Sprinkle User Service}
+\subsection{Lightning Sprinkle User Service}
 
 The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in Python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
 
@@ -201,8 +201,29 @@ In electron, it is also possible to create a tray application, so that the appli
   \caption{The Lightning Sprinkle Tray Application}
 \end{figure}
 
+However, as the thesis is only about developing a proof-of-concept and the translation to javascript/electron took more time than expected, them development of this alternative implementation is not continued.
+
+\subsection{Example website with Google Analytics}
+In order to demonstrate the project, a small static website is set up using an open source template. This example website show how a publisher can implement the Lightning Sprinkle Publisher Library. 
+
+To make the example as real life as possible, the Google AdSense program is joined, so that Google is able to serve real advertisements on the example website. 
+
+One problem with such a third party supplier of advertisements, is that normally there is no toggle to disable the advertisements other than not loading the Javascript library of the advertisement network. Unofficially, however, it is possible to disable advertisements in the same way they are blocked by an Ad Blocker: by removing certain objects from the DOM. For Google AdSense, this is done by the following simple Javascript line:
 
 
+\lstset{language=Javascript}
+\lstset{frame=lines}
+\lstset{caption={Disabling Google AdSense advertisements}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}
+  $('.adsbygoogle').remove()
+\end{lstlisting}
 
+Using this unsupported method, it becomes possible to let the user decide if he or she wants to see advertisements or allow the publisher to request automated payments instead.
 
-\section{Example website with Google Analytics}
+\begin{figure}[h!]
+  \setlength{\fboxsep}{0pt}%
+  \fbox{\includegraphics[width=\textwidth-2px]{images/example-website.png}}
+  \caption{Example website that implement Lightning Sprinkle Publisher Library}
+\end{figure}
