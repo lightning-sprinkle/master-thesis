@@ -183,6 +183,7 @@ SSL certificates are structured according to the X509 format. Such a certificate
 By extracting these Certificate Policies, it is possible to determine the type of certificate that a particular domain name uses. 
 
 \subsection{Electron tray application and Neutrino}
+\label{sec:electron}
 The first proof-of-concept, as described in section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entire bitcoin blockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
 
 However, there are also so-called light wallets available, these wallets do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the users, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that include the transactions of the user for certain. Because not only the transactions for the user are downloaded, the privacy of the user is preserved. 
