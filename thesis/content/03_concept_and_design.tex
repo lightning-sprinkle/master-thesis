@@ -50,7 +50,7 @@ As was shown, the concept where WebRTC is applied in order to let the publisher 
 
 As this concept is built in combination with the Lighting Network, there needs to be an application running on the users' computer anyway. This makes it possible to develop one service that needs to be installed, which acts like both a lightning network client and an interface on localhost to the website that requests a payment.
 
-\subsection{Dynamic contribution}
+\subsection{Revenue distribution}
 
 One of the challenges of this concept is to pay a fair share to the publisher. How to determine the amount that is contributed? The general idea is that the amount should be in the same order of magnitude as the revenue when an online advertisement is displayed. In online advertisement jargon such a display is called an impression. The price of such an impression is determined as Price-per-mille (CPM), the price for 1,000 impressions. If a user clicks on an advertisement, the fee is called the cost-per-click (CPC). The amount of users that clicks on the advertisment is expressed in click-through-rate (CTR) \cite{evans2009online}. For the Google Display Network (which also includes services like Gmail), the following average numbers are available for the first quarter of 2018\cite{cpmgoogle}: 
 
@@ -82,6 +82,14 @@ This results in an average revenue per internet user of 9.22 USD per month. This
 This net profit per internet user per month forms the basis for the pricing model of this concept. By using these numbers, there should be no difference between targeted advertising and this concept in terms of revenue for the publisher.
 
 The next question that needs to be answered is: how to distribute this amount over the publishers in a fair manner?  
+
+The simplest way would be to do $\cfrac{c}{n}$, where $c$ is the contribution per month and $n$ is the amount of publishers. The problem with this approach is that this cannot happen on the fly. $n$ is unknown during the visit of the website. One approach would be to just pay all the publishers once at the end of every month, but that would introduce a lot of risk and prevent the system from making contributions in real time. 
+
+Another approach would be to just make an assumption on $n$, and pay out to the publishers accordingly. If $n$ is reached, the payments will stop. This system is still not ideal, because such assumption is hard to make.
+
+The solution that is presented in this concept, uses a hybrid form of both approaches described above. The system will set a budget per day, based on the calculations above. Lets call this budget $b$. If the user visits a website, the contribution to that particular website will be $\frac{1}{10}$ of the budget. For example: lets say the budget is 20 cents per day. The users visits an article on The Guardian, $\frac{1}{10}$ of the budget, which is 5 cents, is sent to the guardian. Afterwards, the users visits a Wikipedia article, $\frac{1}{10}$ of the budget is sent to Wikipedia. However, only 18 cents of the budget is left. Now $\frac{1}{10}$ of 18 cents, which is 1.8 cents, is sent to Wikipedia. As time passes, the budget is topped up every minute by $\cfrac{b}{1440}$.
+
+Using this approach, the user will never overspend the budget $b$, but is still able to contribute to every website that he visits. One concern could be that websites that are visited in the beginning in the browsing session are rewarded better than websites that are visited at the end of the browsing session. Nonetheless, the browsing behavior of every user is different. In the end, these difference might equal out.
 
 
 
