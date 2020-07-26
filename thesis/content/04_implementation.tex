@@ -17,7 +17,7 @@ In the remainder of this chapter, the following references are used:
 \end{description} 
 
 \subsection{Lightning Sprinkle Publisher Library}
-According to the concept, as discussed in section \ref{sec:webrtc}, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Usually, it is not easy to communicate with services that are running on the users' computer, because this might introduce security flaws as this exposes the computer to any script on any website that is visited. The standard way of interaction between the website and other software on the computer is using a browser extension. This, however, adds an extra step in the installation process. Therefore, other ways of interaction are researched.
+According to the concept, as discussed in the part about WebRTC, there needs to be a method for the publisher to communicate with a system on the users' computer that handles the payment to the publisher. Usually, it is not easy to communicate with services that are running on the users' computer, because this might introduce security flaws as this exposes the computer to any script on any website that is visited. The standard way of interaction between the website and other software on the computer is using a browser extension. This, however, adds an extra step in the installation process. Therefore, other ways of interaction are researched.
 
 \subsubsection{WebRTC}
 
@@ -58,6 +58,40 @@ Firstly, the User Service can support HTTPS, so that is not an issue anymore. Ho
 Secondly, an exception is made by the browser for media content that is being loaded from external resources. The standard way of performing requests to another website from Javascript is using an \texttt{XMLHttpRequest}, but these requests are facing limitations like the one on self-signed certificates. On the other hand, when a website just embeds an image from another website, there are very little limitations. Fortunately, it is possible to load an image in a programmed way and transfer data using this image.
 
 The implementation of this is quite simple: the Publisher Library loads an image that is located on localhost, for example: \texttt{http://localhost:28373/status}. Then the User Service receives the request and is able to answer with an image. The content cannot be extracted easily in the Publisher Library, but metadata like the dimensions of the image are easy to read. Using this approach, a two-way communication is possible between the Publisher Library and the User Service. The User Service responds to the request by sending an image with a particular dimension. In this case, for example, responding with an image that has a width of 2, means that the system is running and the publisher is approved.
+
+
+\lstset{language=Javascript}
+\lstset{frame=lines}
+\lstset{caption={Communication with Lightning Sprinkle User Service}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}
+/**
+* Check if lightningSprinkle is running and if this domain 
+* has been approved by the user.
+* @return {Promise:String} status
+*/
+function getStatus() {
+  return new Promise((resolve, reject) => {
+    let statusImage = new Image();
+    statusImage.referrerPolicy = "unsafe-url"
+    statusImage.src = 'http://localhost:28373/status?' + Math.random()
+    statusImage.decode()
+    .then(() => {
+      if (statusImage.width === 1) {
+        resolve('new')
+      } else if (statusImage.width === 2) {
+        resolve('accepted')
+      } else if (statusImage.width === 3) {
+        resolve('rejected')
+      }
+    })
+    .catch((encodingError) => {
+      resolve('offline')
+    })
+  })
+}
+\end{lstlisting}
 
 \subsubsection{Asking for permission}
 As stated in chapter \ref{cha:conceptanddesign}, the system determines the credibility of a website by checking the type of certificate the publisher has. If this certificate is based on organization validation (OV), the system pays to the publisher automatically. For smaller publishers, who cannot afford such a certificate, the Publisher Library can request permission to get paid. 
@@ -166,6 +200,37 @@ Firstly, the server part functions as web server. There are three different API-
 
 Secondly, the reward module keeps track of the budget. Based on a maximal hourly reward, the fee is calculated and used in the micropayments.
 
+
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Reward system}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}
+  import threading
+  import config
+  
+  bucket = config.max_hourly_reward
+  
+  def fill_bucket():
+    """
+    Make sure the bucket stays filled by adding the 1/60 of the max_hourly_reward
+    every minute.
+    """
+    global bucket
+    threading.Timer(60, fill_bucket).start()
+    bucket = min(bucket + (config.max_hourly_reward / 60), config.max_hourly_reward)
+  
+  def get_current_reward():
+    """
+    Calculate the current reward based on the level of the bucket
+    """
+    global bucket
+    reward = int(bucket * 0.25)
+    bucket = bucket - reward
+    return reward
+\end{lstlisting}
+
 Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in section \ref{sec:localhost}.
 
 Fourthly, the lnd module handles the communication with the lightning network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
@@ -185,6 +250,41 @@ SSL certificates are structured according to the X509 format. These certificates
 \end{enumerate}
 
 By extracting these \textit{CertificatePolicies}, it is possible to determine the type of certificate that a particular domain name uses. 
+
+
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Check if a hostname is an organization}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}
+import ssl
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
+
+def isOrganization(hostname):
+  """
+  Function looks up the SSL certificate for the domain, and checks if 
+  it is an OV or EV certificate by reading the following CertificatePolicies
+  2.23.140.1.2.2: Organization Validation
+  2.23.140.1.1: Extended Validation 
+  """
+
+  # Create a real connection in order to support SNI (server name indication)
+  conn = ssl.create_connection((hostname, 443))
+  context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+  sock = context.wrap_socket(conn, server_hostname=hostname)
+  cert_pem = ssl.DER_cert_to_PEM_cert(sock.getpeercert(True))
+  cert = x509.load_pem_x509_certificate(cert_pem.encode(), default_backend())
+  
+  # Find the certificate type
+  for policy in cert.extensions.get_extension_for_class(x509.CertificatePolicies).value:
+    oid = policy.policy_identifier.dotted_string
+    if oid == '2.23.140.1.2.2' or oid == '2.23.140.1.1':
+      return True
+
+  return False
+\end{lstlisting}
 
 \subsection{Electron tray application and Neutrino}
 \label{sec:electron}
