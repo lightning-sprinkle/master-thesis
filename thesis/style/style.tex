@@ -70,7 +70,8 @@
 \usepackage{xcolor}					% Colors
 \definecolor{LightBlue}{rgb}{0.55,0.55,1}
 \definecolor{DarkBlue}{rgb}{0.2,0.2,0.5}
-\definecolor{DarkRed}{rgb}{0.71,0.12,0.07}
+\definecolor{DarkRed}{rgb}{0.7725490196,0.05490196078,0.12549019607} % new TU red
+\definecolor{Black}{rgb}{0,0,0}
 
 % =========================================================================
 % = PAGE LAYOUT
@@ -322,21 +323,21 @@ sensitive=false, morecomment=[s]{<!--}{-->}, morestring=[b]", morestring=[d]'}
 % ========================================================================
 
 % change color of item list
-\renewcommand{\labelitemi}{\color{DarkRed}$\bullet$}
-\renewcommand{\labelitemii}{\color{DarkRed}$\circ$}
-\renewcommand{\labelitemiii}{\color{DarkRed}$\ast$}
-\renewcommand{\labelitemiv}{\color{DarkRed}$\diamond$}
+\renewcommand{\labelitemi}{\color{Black}$\bullet$}
+\renewcommand{\labelitemii}{\color{Black}$\circ$}
+\renewcommand{\labelitemiii}{\color{Black}$\ast$}
+\renewcommand{\labelitemiv}{\color{Black}$\diamond$}
 
 % change color of enum list
-\renewcommand{\labelenumi}{\color{DarkRed}\arabic{enumi}.}
-\renewcommand{\labelenumii}{\color{DarkRed}\alph{enumii})}
-\renewcommand{\labelenumiii}{\color{DarkRed}\roman{enumiii}.}
-\renewcommand{\labelenumiv}{\color{DarkRed}\Alph{enumiv}.}
+\renewcommand{\labelenumi}{\color{Black}\arabic{enumi}.}
+\renewcommand{\labelenumii}{\color{Black}\alph{enumii})}
+\renewcommand{\labelenumiii}{\color{Black}\roman{enumiii}.}
+\renewcommand{\labelenumiv}{\color{Black}\Alph{enumiv}.}
 
 % change color of description list
 \usepackage{enumitem}
-\setdescription{font=\color{DarkRed}\rmfamily\itshape}
-% \renewenvironment{description}{\list{font=\color{DarkRed}\itshape}}{\endlist}
+\setdescription{font=\color{Black}\rmfamily\itshape}
+%\renewenvironment{description}{\list{font=\color{Black}\itshape}}{\endlist}
 
 
 % ========================================================================
@@ -344,7 +345,7 @@ sensitive=false, morecomment=[s]{<!--}{-->}, morestring=[b]", morestring=[d]'}
 % ========================================================================
 
 % change color of footnotes
-\renewcommand{\thefootnote}{\color{DarkRed}\arabic{footnote}}
+\renewcommand{\thefootnote}{\color{Black}\arabic{footnote}}
 
 % use nice footnote indentation
 \deffootnote[1em]{1em}{1em}{\textsuperscript{\thefootnotemark}\,}
@@ -386,7 +387,7 @@ sensitive=false, morecomment=[s]{<!--}{-->}, morestring=[b]", morestring=[d]'}
 {
   \begin{minipage}
   {.2\textwidth}
-    \includegraphics[width=0.9\textwidth]{images/snet/snet_footer.png}
+    \includegraphics[width=0.6\textwidth]{images/snet/snet_footer.png}
   \end{minipage}
 }
 
@@ -397,7 +398,7 @@ sensitive=false, morecomment=[s]{<!--}{-->}, morestring=[b]", morestring=[d]'}
 \fancyhfoffset[RO,LE]{0.1cm} %{\marginparsep+\marginparwidth}
 \fancyhfoffset[RE,LO]{0.1cm}
 %\fancyheadoffset[RE,LO]{\hoffset + \oddsidemargin}
-\renewcommand{\headrule}{{\color{DarkRed}%
+\renewcommand{\headrule}{{\color{Black}%
   \hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
 \fancyhf{}
 \fancyhead[RE]{\slshape \nouppercase{\leftmark}}    % Even page header: "page   chapter"
@@ -415,7 +416,7 @@ sensitive=false, morecomment=[s]{<!--}{-->}, morestring=[b]", morestring=[d]'}
 % = SECTIONS THEMING
 % =========================================================================
 
-\newcommand{\allsectionformat}{\color{DarkRed}\rmfamily\normalfont}
+\newcommand{\allsectionformat}{\color{Black}\rmfamily\normalfont}
 
 % Font style and colors
 \addtokomafont{part}{\Huge\allsectionformat}
