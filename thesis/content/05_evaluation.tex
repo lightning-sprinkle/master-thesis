@@ -1,7 +1,7 @@
 \chapter{Performance Analysis \& Evaluation}
 \label{cha:evaluation}
 
-The concept that is designed in this thesis is evaluated with two different software projects: the Lightning Sprinkle User Service and the Lightning Sprinkle Publisher Library, which are written in Python and Javascript respectively. 
+The concept that is designed in this thesis is evaluated with two different software projects: the Lightning Sprinkle User Service and the Lightning Sprinkle Publisher Library, which are written in Python and JavaScript respectively. 
 
 The goal of these software projects is to prove that it is possible to implement an answer to the concept that is stated in section \ref{sec:uaps}. These requirements are used as part of the evaluation, combined with a couple of performance tests. The performance tests include the scalability of the platform and response time. 
 
@@ -16,7 +16,7 @@ Concept: \textit{Distribute a small amount of money over the publishers behind t
 \noindent The challenges from section \ref{sec:uaps} can be translated into the following requirements:
 \begin{enumerate}
   \item Minimal configuration
-  \item Decentral
+  \item Decentralized
   \item Fair distribution
   \item Tamper proof
 \end{enumerate}
@@ -25,7 +25,7 @@ Firstly, the minimal configuration requirement can be observed from two perspect
 
 In the real world, it is not so easy to obtain any cryptocurrency. In most countries, there are laws in order to prevent money laundering and backing of terrorism. For example, in the Netherlands, the Anti-Money Laundering and Anti-Terrorist Financing Act\footnote{\url{https://www.toezicht.dnb.nl/en/4/6/51-204766.jsp}} requires that any financial institution gathers data about their customers, which also includes cryptocurrency exchanges. The process of converting any fiat currency to a cryptocurrency might consist out of registering somewhere and uploading a copy of an identity document. This makes the whole application more cumbersome and hard to use by non-tech-savvy users. Therefore, the first requirement is only partially met due to external limitations.
 
-Secondly, concerning the decentral requirement, there should not be a single authority that has any power over the network as a whole. This requirement is almost met completely. The system relies on the bitcoin blockchain, which is decentral by design. This also accounts for the lightning network, as this network is decentral by design. The only central authorities that the system relies on, are the certificate authorities. A certificate authority might revoke a certificate, so that the Lightning Sprinkle User Service does not send automated payments anymore. However, revoking a certificate results in side effects that are even worse: the browser will reject any connection to the website at all.
+Secondly, concerning the decentralized requirement, there should not be a single authority that has any power over the network as a whole. This requirement is almost met completely. The system relies on the bitcoin blockchain, which is decentralized by design. This also accounts for the lightning network, as this network is decentralized by design. The only central authorities that the system relies on, are the certificate authorities. A certificate authority might revoke a certificate, so that the Lightning Sprinkle User Service does not send automated payments anymore. However, revoking a certificate results in side effects that are even worse: the browser will reject any connection to the website at all.
 
 Thirdly, the fair distribution requirement is hard to meet totally. In the first place, there is no existing distribution model that handles this problem. For example, the Brave browser just distributes the money over the publishers and does not take into account factors like the frequency of visits or the credibility of the website. This thesis comes up with a model that takes frequency of visits into account, but it is still hard to make it really fair. To illustrate this dilemma: if someone visits a news website ten times a day, does this mean that specific website is ten times as valuable as one single Wikipedia article which is visited less frequently? This is one of many examples which shows that this topic still has plenty of room for discussion. 
 
@@ -33,3 +33,42 @@ Thirdly, the fair distribution requirement is hard to meet totally. In the first
 
 Fourthly, the security of the system in terms of fraud is moderate. Imagine an attack where a fraudulent party is able to register a bunch of domain names that all try to request a payment. In this concept this is solved by only allowing domain names with an OV or EV certificate to request an immediate payment. Of course, this system with certificates still has certain flaws, for example when a party has sufficient budget, it is still able to register enough domain names with these expensive certificates. Another flaw of the implemented security system, is that attacks might come from malware that is installed on the computer. However, in most practical applications of crytocurrencies malware is also an issue.
 
+
+\section{Performance impact}
+As the proposed solution will be loaded as an extra JavaScript library, the loading performance of the browser will be affected. In order to test this impact, a performance analysis is performed.
+
+For this analysis, the demo website that is described in section \ref{sec:examplesite} is used and modified so that it supports the following test scenarios:
+
+\begin{enumerate}
+  \item Load with Google Adsense and Lightning Sprinkle
+  \item Load with Google Adsense only
+  \item Load with Lightning Sprinkle only
+  \item Load without any extra library
+\end{enumerate}
+
+\newpage
+These test scenarios are performed using Firefox 78.0.1 combined with an average home DSL connection. All tests are run ten times. The load time of every test is measured in milliseconds.
+
+\begin{table}[h!]
+  \begin{tabular}{lllll}
+  & Google Ads \& Lightning Sprinkle & Google Ads & Lightning Sprinkle & None \\
+  \hline
+  & 1820 ms & 1870 ms & 542 ms & 453 ms \\
+  & 2400 ms & 2150 ms & 671 ms & 448 ms  \\
+  & 2410 ms & 1590 ms & 506 ms & 524 ms  \\
+  & 1850 ms & 1670 ms & 545 ms & 509 ms  \\
+  & 2120 ms & 1950 ms & 630 ms & 495 ms  \\
+  & 1930 ms & 1720 ms & 652 ms & 773 ms  \\
+  & 1620 ms & 2090 ms & 549 ms & 510 ms  \\
+  & 1870 ms & 1660 ms & 407 ms & 465 ms  \\
+  & 1750 ms & 1760 ms & 463 ms & 450 ms  \\
+  & 1890 ms & 1680 ms & 482 ms & 476 ms  \\
+  \hline
+  Avg. & \textbf{1966 ms} & \textbf{1814 ms} & \textbf{544.7 ms} & \textbf{510.3 ms}
+  \end{tabular}
+  \caption{Load time performance analysis}
+\end{table}
+
+As expected, including Google Ads on a web page significantly affect the performance. The base case compared to the Google Ads case, results in an increase of more than 300\% of load time. The Lightning Sprinkle Publisher Library, however does not affect the load time that much. Compared to the base case, this is less than 10\%, which might even go unnoticed by the end user. 
+
+The proposed system however, should function with both libraries enabled and let the user decide which system will be used. These publishers might be already using Google Ads and extend their website with Lightning Sprinkle. As can be seen in the table, in this scenario, the increase in load time will also be less than 10\%. Therefore, adopting the Lightning Sprinkle system does not result in a significant change of performance of the website.
