@@ -52,7 +52,36 @@ As it was shown, the concept where WebRTC is applied in order to let the publish
 
 As this concept is built in combination with the Lighting Network, there needs to be an application running on the users' computer anyway. This makes it possible to develop one service that needs to be installed, which acts like both a lightning network client and an interface on localhost to the website that requests a payment.
 
-\subsection{Revenue distribution}
+
+\section{Wallet address listing}
+
+As described in the Lightning Network concept, there is a possibility to send micropayments to a publisher. The challenge in this case is, how to communicate the wallet address of the publisher to the users' computer? Of course, it is possible to just store it somewhere in a javascript variable. A potential security flaw in this approach is that some websites are executing user generated content, for example: it is possible to host a website with javascript content on \textit{github.io}. In that case it is not desirable that a fraudulent party spams javascript snippets over the internet that asks for an automated payment without contributing to valueable content. 
+
+One aspect of websites is barely modified by user generated content: DNS records. DNS records are only modifyable by the owner of the domain name, which, in most cases, is the publisher. One way of storing information in DNS records is to just create a subdomain that contains the content: in this case, the wallet address of the publisher. 
+
+Fortunately, the DNS specification also features a so-called TXT record. This is a record that does not affect the way the domain name is resolved. However, it can be queried and used by other applications. For the automated payment design, the TXT record is used by the system to provide the wallet address of the publisher, so that it cannot be modified by someone else, other than the owner of the domain name. 
+
+\section{Self-signed, DV, OV and EV certificates}
+
+One of the problems with an automated payment system is: how can be determined if a publisher is trustworthy? For example: what happens if some malicious publisher buys a bunch of domain names and opens 50 tabs on the users' computer? Does the system make a payment to all 50 domains? 
+
+One approach would be to assign one party that is able to determine which publisher is trustworthy and which one is not. This would violate the decentral principle of the concept and is therefore not desirable. Another approach that is discussed is to calculate some kind of score, such as pagerank, and use this score to value the credibility of the publisher. Based on this credibility, a payment might be made or might be adjusted. For example: the domain name \textit{spiegel.de} has a pagerank score of 8/10 where \textit{gartenforum.de} has a pagerank score of 3/10. This ranking, however, does not indicate the trustworthyness of a publisher. There is no legitimate reason to pay more to a big publisher than to a small independant content creator. 
+
+Fortunately, there is already a worldwide decentral system in place that validates credibility of websites: SSL certificates. SSL certificates, that are needed in order to establish an encrypted connection to a website, are also applied to make sure that the user is communicating with the website that it pretends to be. In order to understand this concept, a short introduction to the different types of certificates and architecture is given. 
+
+First, a certificate needs to be issued by an authority. The credibility of the certificate is based on the credibility of the issuer. If some publisher issues the certificate by themselves, it is called a self-signed certificate and this provides no credibility other than that the connection is encrypted. There is, however, no guarantee that the party on the other end of the line is the party they are pretending to be. If the issuer is a trusted party, the certificate is called a certification authority (CA). These CA's are trusted by the browser or SSL library, and they are doing a couple of background checks before they are issuing a certificte. The level of background checks depends on the type of certificate. 
+
+The least secure type of CA certificate is the Domain Validation (DV). These certificates are available for free and can be used by anyone that owns a domain name. Therefore, a DV certificate does not say anything about the credibility of the publisher. A fraudulent party is able to register a bunch of domain names and also apply for certificates.
+
+A more secured certificate is the Organization Validation (OV), also known as a High Assurance certificate. With this type of certificate, the issuer does some background checks in advance. These background checks include the verification of the information in a third party database, such as a companies house. One other aspect of these certificates is that they are not free, which means that it is less easy to register a bunch of domain names. Major publishers, such as \textit{spiegel.de} are using these OV certificates.
+
+As an extension to the OV certificate, there is an Extended Validation certification. In the past, this type of certificate was popular amongs banks and government agencies, because it showed the name of the legal entity in the browser when such a certificate was used. EV certificates are even more expensive, as the background checks are comprehensive.
+
+These aspects of SSL certificates are very valueable in order to determine the credibilty of a publisher. The default setting of the universal payment solution will be that automated payments are only made to publishers with an OV or EV certificate.
+
+
+
+\section{Revenue distribution}
 
 One of the challenges of this concept is to pay a fair share to the publisher. How to determine the amount that is contributed? The general idea is that the amount should be in the same order of magnitude as the revenue when an online advertisement is displayed. In online advertisement jargon such a display is called an impression. The price of such an impression is determined as Price-per-mille (CPM), the price for 1,000 impressions. If a user clicks on an advertisement, the fee is called the cost-per-click (CPC). The amount of users that clicks on the advertisment is expressed in click-through-rate (CTR) \cite{evans2009online}. For the Google Display Network (which also includes services like Gmail), the following average numbers are available for the first quarter of 2018\cite{cpmgoogle}: 
 
@@ -96,30 +125,3 @@ Using this approach, the user will never overspend the budget $b$, but is still 
 One other concern about this approach is the payment is based on pageviews. If a user is browsing 20 different Wikipedia articles, that would result in the same revenue as the same user using a search engine 20 times. Of course, it is possible to limit the contribution to only one contribution per publisher per day. But as this concept tries to be an alternative to online advertising. Online advertising generates revenue based on impressions, which means that spending more time on a website generates more revenue. Therefore, this aspect of the revenue is also implemented in this concept. 
 
 Unfortunately, research on this approach did not result in any terminology or a basic mathematical principle. From now on, this approach will be called fractional contribution. 
-
-\subsection{Wallet address listing}
-
-As described in the Lightning Network concept, there is a possibility to send micropayments to a publisher. The challenge in this case is, how to communicate the wallet address of the publisher to the users' computer? Of course, it is possible to just store it somewhere in a javascript variable. A potential security flaw in this approach is that some websites are executing user generated content, for example: it is possible to host a website with javascript content on \textit{github.io}. In that case it is not desirable that a fraudulent party spams javascript snippets over the internet that asks for an automated payment without contributing to valueable content. 
-
-One aspect of websites is barely modified by user generated content: DNS records. DNS records are only modifyable by the owner of the domain name, which, in most cases, is the publisher. One way of storing information in DNS records is to just create a subdomain that contains the content: in this case, the wallet address of the publisher. 
-
-Fortunately, the DNS specification also features a so-called TXT record. This is a record that does not affect the way the domain name is resolved. However, it can be queried and used by other applications. For the automated payment design, the TXT record is used by the system to provide the wallet address of the publisher, so that it cannot be modified by someone else, other than the owner of the domain name. 
-
-\subsection{Self-signed, DV, OV and EV certificates}
-
-One of the problems with an automated payment system is: how can be determined if a publisher is trustworthy? For example: what happens if some malicious publisher buys a bunch of domain names and opens 50 tabs on the users' computer? Does the system make a payment to all 50 domains? 
-
-One approach would be to assign one party that is able to determine which publisher is trustworthy and which one is not. This would violate the decentral principle of the concept and is therefore not desirable. Another approach that is discussed is to calculate some kind of score, such as pagerank, and use this score to value the credibility of the publisher. Based on this credibility, a payment might be made or might be adjusted. For example: the domain name \textit{spiegel.de} has a pagerank score of 8/10 where \textit{gartenforum.de} has a pagerank score of 3/10. This ranking, however, does not indicate the trustworthyness of a publisher. There is no legitimate reason to pay more to a big publisher than to a small independant content creator. 
-
-Fortunately, there is already a worldwide decentral system in place that validates credibility of websites: SSL certificates. SSL certificates, that are needed in order to establish an encrypted connection to a website, are also applied to make sure that the user is communicating with the website that it pretends to be. In order to understand this concept, a short introduction to the different types of certificates and architecture is given. 
-
-First, a certificate needs to be issued by an authority. The credibility of the certificate is based on the credibility of the issuer. If some publisher issues the certificate by themselves, it is called a self-signed certificate and this provides no credibility other than that the connection is encrypted. There is, however, no guarantee that the party on the other end of the line is the party they are pretending to be. If the issuer is a trusted party, the certificate is called a certification authority (CA). These CA's are trusted by the browser or SSL library, and they are doing a couple of background checks before they are issuing a certificte. The level of background checks depends on the type of certificate. 
-
-The least secure type of CA certificate is the Domain Validation (DV). These certificates are available for free and can be used by anyone that owns a domain name. Therefore, a DV certificate does not say anything about the credibility of the publisher. A fraudulent party is able to register a bunch of domain names and also apply for certificates.
-
-A more secured certificate is the Organization Validation (OV), also known as a High Assurance certificate. With this type of certificate, the issuer does some background checks in advance. These background checks include the verification of the information in a third party database, such as a companies house. One other aspect of these certificates is that they are not free, which means that it is less easy to register a bunch of domain names. Major publishers, such as \textit{spiegel.de} are using these OV certificates.
-
-As an extension to the OV certificate, there is an Extended Validation certification. In the past, this type of certificate was popular amongs banks and government agencies, because it showed the name of the legal entity in the browser when such a certificate was used. EV certificates are even more expensive, as the background checks are comprehensive.
-
-These aspects of SSL certificates are very valueable in order to determine the credibilty of a publisher. The default setting of the universal payment solution will be that automated payments are only made to publishers with an OV or EV certificate.
-
