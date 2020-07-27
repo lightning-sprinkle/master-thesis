@@ -8,7 +8,7 @@ In the beginning, the main focus laid on privacy issues that are coming with the
 The problem with this concept has been actively researched. For example, it is implemented in the Privad system, which can be found in Section \ref{sec:privad} and the Brave Browser, which is discussed in Section \ref{sec:brave}.
 
 \label{sec:uaps}
-The second concept goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in Chapter \ref{cha:relatedwork}, the problem with ad networks is that it is one of the few revenue models that actually works on the internet.
+The second concept goes one step further. This concept is not about replacing the ad network with a privacy friendly alternative, but making the entire ad network obsolete. As discussed in Chapter \ref{cha:relatedwork}, the problem with ad networks is that it is one of the few revenue models that actually works on the Internet.
 
 Several commercial experiments are performed using micropayments, however, as stated in Chapter \ref{cha:relatedwork}, very few of them are successful. Mainly because of the mental transaction costs that comes with the purchase of online content. In order to solve this issue, the concept of automated payments is introduced. This approach combines the advantage of web advertisements (no browsing interruption) with the benefit of micropayments (no ads). The concept might also be explained as a fair ad blocker. No ads, while taking care of the revenue of the publisher. The goal of this concept is to offer such a system with as minimal configuration as possible.
 
@@ -38,7 +38,7 @@ In order to stick to the zeroconf (zero or minimal configuration) principle, the
 
 This concept assumes that there is a system running that handles all the automated payments to the publisher. The first problem that needs to be solved is: how does the website communicate with the system. Installing an add-on in the browser would violate the zeroconf principle, so this approach uses WebRTC as a message bus. The reason why WebRTC is chosen, is that WebRTC makes it possible for browsers to communicate with each other. Besides, it is also possible for different websites to communicate in the same browser. Normally, this is not so easy because every website runs in a sandboxed environment. For example, if \textit{derspiegel.de} wants to communicate with a system on \textit{example.com}, that is only possible if there is a link between both websites, such as an iframe or if one of the websites opened a tab to the other one. 
 
-WebRTC connects to an IP address, so what happens if it is connected to localhost? Is it possible to let two websites communicate without a link between them? The WebRTC is indeed able to connect to localhost, but in order to do so, a handshake is needed \cite{dutton2013webrtc}. This handshake, however, is not specified in the WebRTC protocol. This means the system can implement its own way of doing so. WebRTC-systems that are applied on the internet are mostly relying on a signaling server, which forwards the handshake. 
+WebRTC connects to an IP address, so what happens if it is connected to localhost? Is it possible to let two websites communicate without a link between them? The WebRTC is indeed able to connect to localhost, but in order to do so, a handshake is needed \cite{dutton2013webrtc}. This handshake, however, is not specified in the WebRTC protocol. This means the system can implement its own way of doing so. WebRTC-systems that are applied on the Internet are mostly relying on a signaling server, which forwards the handshake. 
 
 During this research, several experiments are performed using WebRTC. Unfortunately, it turned out that it is not possible to connect two websites within one browser directly. A signaling server that is run by a third party stays neccesary. This would introduce a privacy problem, because the third party would be able to find out which publisher is visited from which IP address. Therefore, considering this thesis, the concept with WebRTC is abandoned at an early stage.
 
@@ -55,7 +55,7 @@ As this concept is built in combination with the Lighting Network, there needs t
 
 \section{Wallet address listing}
 
-As described in the Lightning Network concept, there is a possibility to send micropayments to a publisher. The challenge in this case is, how to communicate the wallet address of the publisher to the users' computer? Of course, it is possible to just store it somewhere in a JavaScript variable. A potential security flaw in this approach is that some websites are executing user generated content, for example: it is possible to host a website with JavaScript content on \textit{github.io}. In that case it is not desirable that a fraudulent party spams JavaScript snippets over the internet that asks for an automated payment without contributing to valueable content. 
+As described in the Lightning Network concept, there is a possibility to send micropayments to a publisher. The challenge in this case is, how to communicate the wallet address of the publisher to the users' computer? Of course, it is possible to just store it somewhere in a JavaScript variable. A potential security flaw in this approach is that some websites are executing user generated content, for example: it is possible to host a website with JavaScript content on \textit{github.io}. In that case it is not desirable that a fraudulent party spams JavaScript snippets over the Internet that asks for an automated payment without contributing to valueable content. 
 
 One aspect of websites is barely modified by user generated content: DNS records. DNS records are only modifyable by the owner of the domain name, which, in most cases, is the publisher. One way of storing information in DNS records is to just create a subdomain that contains the content: in this case, the wallet address of the publisher. 
 
@@ -100,7 +100,7 @@ One of the challenges of this concept is to pay a fair share to the publisher. H
 \begin{equation}
   \text{revenue per ad} \times \text{impressions per month} = 0.005425 \times 1,700 = 9.22 ~\text{USD}
 \end{equation}
-This results in an average revenue per internet user of 9.22 USD per month. This, however, does not include the margin of the advertising networks, which is somewhere between 20 and 50 percent. For the Google Display Network it is 32 percent \cite{googlefee}. If we subtract this fee from the calculation above, the remaining profit for all publishers is:
+This results in an average revenue per Internet user of 9.22 USD per month. This, however, does not include the margin of the advertising networks, which is somewhere between 20 and 50 percent. For the Google Display Network it is 32 percent \cite{googlefee}. If we subtract this fee from the calculation above, the remaining profit for all publishers is:
 
 
 \begin{equation}
@@ -108,7 +108,7 @@ This results in an average revenue per internet user of 9.22 USD per month. This
 \end{equation}
 
 
-This net profit per internet user per month forms the basis for the pricing model of this concept. By using these numbers, there should be no difference between targeted advertising and this concept in terms of revenue for the publisher.
+This net profit per Internet user per month forms the basis for the pricing model of this concept. By using these numbers, there should be no difference between targeted advertising and this concept in terms of revenue for the publisher.
 
 The next question that needs to be answered is: how to distribute this amount over the publishers in a fair manner?  
 

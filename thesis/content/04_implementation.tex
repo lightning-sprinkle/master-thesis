@@ -288,7 +288,7 @@ def isOrganization(hostname):
 
 \subsection{Electron tray application and Neutrino}
 \label{sec:electron}
-The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entireblockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
+The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entireblockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL Internet connection. 
 
 However, there are also so-called light wallets available, which do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at least include the transactions of the user. However, because not only the transactions of the user are downloaded, but also some transaction of several other users, the privacy of the user is preserved.
 
