@@ -37,13 +37,6 @@ TCP
 \usepackage[pdftex,pdfpagelabels=true]{hyperref}
 \usepackage{hyphenat}
 \usepackage{pdfpages}
-\hypersetup{%
-	pdftitle={Thesis Title},
-	pdfauthor={Thesis Author},
-	pdfkeywords={key1, key2, key3},
-	pdfsubject={Thesis Subject}
-}
-
 % Adding a finite stretch on the page suppresses "Underfull \vbox (badness 10000)" warnings.
 \makeatletter
 \def\@textbottom{\vskip \z@ \@plus 1pt}
@@ -101,7 +94,7 @@ TCP
 \begin{appendices}
 	\chapter{Research Proposal}
 	\includepdf[pages={1,2}]{../research-proposal/research-proposal.pdf}
-	% \input{content/99_appendices/a02_listings}
+	\input{content/99_appendices/initial-talk}
 	% \input{content/99_appendices/a03_listings}
 \end{appendices}
 
