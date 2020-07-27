@@ -44,7 +44,7 @@ During this research, several experiments are performed using WebRTC. Unfortunat
 
 The approach above, however, does not include any form of payment. In the first stage, the scope is limited to a universal payment system, without taking care of the payment itself. It is assumed that there is a cryptocurrency solution that can be attached to the universal payment system.
 
-Fortunately, parallel to this research, a micropayment solution based on the Bitcoin block-chain is being actively developed. This so-called Lightning Network is discussed in Section \ref{sec:lightning} in more detail. The goal of this system is to provide instant micropayments at minimal costs, which is ideal for an automated payment solution.
+Fortunately, parallel to this research, a micropayment solution based on the Bitcoin block\-chain is being actively developed. This so-called Lightning Network is discussed in Section \ref{sec:lightning} in more detail. The goal of this system is to provide instant micropayments at minimal costs, which is ideal for an automated payment solution.
 
 From the concept point of view, the payment part is a matter of communicating with an API. Nonetheless, due to some issues with the Lightning Network, it is not yet ready. One of the main disadvantages of the Lightning Network is that it is not possible to send a transaction to an address directly. By design, a payment should be requested by issuing an invoice. The invoice is written according to a standard format and can be paid using any Lightning Network client. This invoice-based structure is suboptimal for the usecase that is needed for this research.
 

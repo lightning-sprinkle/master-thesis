@@ -37,25 +37,25 @@ On the basis of advancing insights, during experiments with the Lightning Networ
 \subsubsection{Localhost}
 \label{sec:localhost}
 
-The final approach to the problem of connecting from the publisher library to the user service is using localhost. The idea stems from how the video conferencing tool Zoom connects to their software from an arbitrary website. The principle builds on the fact that it is possible to load content from websites that are hosted on another domain. This also includes localhost.
+The final approach to the problem of connecting from the Publisher Library to the User Service is using localhost. The idea stems from how the video conferencing tool Zoom connects to their software from an arbitrary website. The principle builds on the fact that it is possible to load content from websites that are hosted on another domain. This also includes localhost.
 
 In practice, any website can connect to any other domain. Examples of applications can be found in abundance in web tracking. For example, if a user visits a website that uses third party tracking, a request is made to the third party from the users' computer to send data, such as tracking cookies, to the ad network. 
 
-This implementation aims to enable the publisher library to connect to the user service on the local machine in order to request an automated payment. The user service includes a web server that can be accessed by the publisher library. 
+This implementation aims to enable the Publisher Library to connect to the User Service on the local machine in order to request an automated payment. The User Service includes a web server that can be accessed by the Publisher Library. 
 
-The ability to create requests to different domains introduces plenty of security issues. It might leak data that is only intended for the user on other domains or even trigger an action on another website. This is known as cross site scripting (XSS) vulnerabilities. Therefore, browsers have taken security measures in order to prevent these undesired side effects.
+The ability to create requests to different domains introduces plenty of security issues. It might leak data that is only intended for the user on other domains or even trigger an action on another website. This is known as Cross Site Scripting (XSS) vulnerabilities. Therefore, browsers have taken security measures in order to prevent these undesired side effects.
 
 Firstly, as a website, it is possible to configure the Cross-Origin Resource Sharing (CORS). This parameter can limit the amount of websites that are allowed to send a request to them. Secondly, so-called mixed content is not allowed. This means that if the website runs on HTTPS and initiates a request to a third party that is on HTTP, the request is blocked by the browser. Thirdly, Chrome is actively blocking any requests to localhost, as this might expose services that are running on the local machine.
 
 The first security measure can be circumvented easily by setting \\\texttt{Access-Control-Allow-Origin:*}, which means that any publisher using the Publisher Library is able to connect to the User Service. 
 
-The second measure is harder to circumvent. As of 2020, every self-respecting website uses HTTPS, so it is impossible to not support the Publisher Library on HTTPS websites. /so not supporting the Publisher Library on HTTPS websites is not possible. There are a couple of ways to make it possible to support HTTPS enabled publishers to connect to localhost:
+The second measure is harder to circumvent. As of 2020, every self-respecting website uses HTTPS, so it is impossible to not support the Publisher Library on HTTPS websites. So, not supporting the Publisher Library on HTTPS websites is not possible. There are a couple of workarounds to make it possible to support HTTPS enabled publishers to connect to localhost:
 
 %twijfel over deze dubbele punt. En daarnaast: de eerste zin hieronder is nogal abrupt: ineens is het probleem opgelost. Twijfel of je daar iets meer woorden aan vuil moet maken.
  
-Firstly, the User Service can support HTTPS, so that is not an issue anymore. However, in order to support HTTPS, there needs to be a certificate that is used to encrypt the traffic to localhost. Such a certificate can only be issued if a domain name is used. With localhost, this is not the case. So, the only option is to generate a self-signed certificate. Self-signed certificates, however, are not trusted by browsers, so requests are still blocked. To support this self-signed certificate, the user needs to make an exception in the browser for this particular certificate. This method is not very user-friendly and violates the zeroconf principle, which makes it suboptimal.
+Firstly, the User Service can support HTTPS. However, in order to support HTTPS, there needs to be a certificate that is used to encrypt the traffic to localhost. Such a certificate can only be issued if a domain name is used. With localhost, this is not the case. So, the only option is to generate a self-signed certificate. Self-signed certificates, however, are not trusted by browsers, so requests are still blocked. To support this self-signed certificate, the user needs to make an exception in the browser for this particular certificate. This method is not very user-friendly and violates the zeroconf principle, which makes it suboptimal.
 
-Secondly, an exception is made by the browser for media content that is being loaded from external resources. The standard way of performing requests to another website from JavaScript is using an \texttt{XMLHttpRequest}, but these requests are facing limitations like the one on self-signed certificates. On the other hand, when a website just embeds an image from another website, there are very little limitations. Fortunately, it is possible to load an image in a programmed way and transfer data using this image.
+Secondly, an exception is made by the browser for media content that is being loaded from external resources. The standard way of performing requests to another website from Java\-Script is using an \texttt{XMLHttpRequest}, but these requests are facing limitations like the one on self-signed certificates. On the other hand, when a website just embeds an image from another website, there are very little limitations. Fortunately, it is possible to load an image in a programmed way and transfer data using this image.
 
 The implementation of this is quite simple: the Publisher Library loads an image that is located on localhost, for example: \texttt{http://localhost:28373/status}. Then the User Service receives the request and is able to answer with an image. The content cannot be extracted easily in the Publisher Library, but metadata like the dimensions of the image are easy to read. Using this approach, a two-way communication is possible between the Publisher Library and the User Service. The User Service responds to the request by sending an image with a particular dimension. In this case, for example, responding with an image that has a width of 2, means that the system is running and the publisher is approved.
 
@@ -96,7 +96,7 @@ function getStatus() {
 \subsubsection{Asking for permission}
 As stated in Chapter \ref{cha:conceptanddesign}, the system determines the credibility of a website by checking the type of certificate the publisher has. If this certificate is based on organization validation (OV), the system pays to the publisher automatically. For smaller publishers, who cannot afford such a certificate, the Publisher Library can request permission to get paid. 
 
-The system that asks for permission also relies on the web ecosystem. The publisher library checks if this publisher is permitted. If this is not the case, a pop-up window is opened which opens a web page that is hosted on localhost by the user service. The user service is able to find out which publisher made the request by reading the referral header. The user is able to accept the request, which adds the domain name to the whitelist. In the future, this publisher is also able to request automated payments.
+The system that asks for permission also relies on the web ecosystem. The Publisher Library checks if this publisher is permitted. If this is not the case, a pop-up window is opened which opens a web page that is hosted on localhost by the User Service. The User Service is able to find out which publisher made the request by reading the referral header. The user is able to accept the request, which adds the domain name to the whitelist. In the future, this publisher is also able to request automated payments.
 
 \begin{figure}[h!]
   \setlength{\fboxsep}{0pt}%
@@ -109,15 +109,15 @@ The system that asks for permission also relies on the web ecosystem. The publis
 
 Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, somehow, needs to make a micropayment. As discussed in the Chapter \ref{cha:relatedwork}, existing payment service providers are not suitable since they violate the decentralized principle. Therefore, the landscape of cryptocurrencies that are suitable for micropayments is researched. It turned out that the Lightning Network is the most promising solution, as it relies on the cryptocurrency with the largest market capacity and is still able to process instant payments with minimal fees. The principle of the Lightning Network is already explained in Chapter \ref{cha:conceptanddesign}. This section will explain what challenges were faced during the implementation of the proof-of-concept.
 
-The Lightning Network is not a single implementation. The creators of the Lightning Network decided to create a request for comments (RFC) instead. This RFC describes how the network should function and by what rules. Several other parties are implementing clients that follow this standard. However, because of the current work-in-progress state of the system, there are small differences between the clients and even between different versions of clients. 
+The Lightning Network is not a single implementation. The creators of the Lightning Network decided to create a Request For Comments (RFC) instead. This RFC describes how the network should function and by what rules. Several other parties are implementing clients that follow this standard. However, because of the current work-in-progress state of the system, there are small differences between the clients and even between different versions of clients. 
 
-In order to run a lightning node, which is a client that is part of the network, an application with multiple components is needed. 
+In order to run a Lightning Node, which is a client that is part of the network, an application with multiple components is needed. 
 
-Firstly, there is a normalclient, in order to communicate with thenetwork and perform transactions on the blockchain. Thisclient also takes care of the private keys that are needed to sign any transaction.
+Firstly, there is a normal client, in order to communicate with the network and perform transactions on the blockchain. This client also takes care of the private keys that are needed to sign any transaction.
 
-Secondly, there needs to be a Lightning Network node. This client handles all the communication with the Lightning Network, and also interacts with theclient in order to open or close channels. 
+Secondly, there needs to be a Lightning Network Node. This client handles all the communication with the Lightning Network, and also interacts with the client in order to open or close channels. 
 
-Thirdly, since all the transactions that occur over the Lightning Network are easy to follow, there needs to be some form of obfuscation. The union router (TOR) is used to anonymize the interaction with the network. Otherwise, it will be easy to link an IP address to a lightning transaction.
+Thirdly, since all the transactions that occur over the Lightning Network are easy to follow, there needs to be some form of obfuscation. The Onion Router (TOR) is used to anonymize the interaction with the network. Otherwise, it will be easy to link an IP address to a Lightning transaction.
 
 %En waarom is dat een probleem?
 
@@ -130,7 +130,7 @@ Thirdly, since all the transactions that occur over the Lightning Network are ea
 
 The node-launcher can be described as package bundle with all the components listed above, written in Python. It takes care that all the components are configured correctly and are up and running. It also features a tray application that shows the status of the application. In the first phase, this application is adopted as a lighting network solution as this application is easily modifiable.
 
-When the node-launcher is running, there is no GUI to interact with the Lightning Network node. It is up to the user to install a front-end that interacts with the lightning node. Examples of these front-ends are the Zap wallet\footnote{\url{https://github.com/LN-Zap/lnd}} or the Joule Browser Extension\footnote{\url{https://github.com/joule-labs/joule-extension}}. For this thesis, however, there is no need for a front-end, as the Lightning Sprinkle User Service is able to interact with then lightning node directly. 
+When the node-launcher is running, there is no GUI to interact with the Lightning Network node. It is up to the user to install a front-end that interacts with the Lightning Node. Examples of these front-ends are the Zap wallet\footnote{\url{https://github.com/LN-Zap/lnd}} or the Joule Browser Extension\footnote{\url{https://github.com/joule-labs/joule-extension}}. For this thesis, however, there is no need for a front-end, as the Lightning Sprinkle User Service is able to interact with then Lightning Node directly. 
 
 The design of a Lightning Network transaction is based on a one-time invoice structure. The receiver of the payment needs to create such an invoice first, which will be transmitted in the form of an encoded string or QR-code. This invoice contains details like the amount, payee public key, routing hints and an expiration date. The payor opens this invoice in the lighting network node application, and after that is able to submit the payment.
 
@@ -184,7 +184,7 @@ Interestingly, the custom record functionality is also implemented quite recentl
 
 \subsection{Lightning Sprinkle User Service}
 
-The user service is the component that handles all the requests from the publishers that have implemented the publisher library. In order to do so, an application in Python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
+The User Service is the component that handles all the requests from the publishers that have implemented the Publisher Library. In order to do so, an application in Python is built on the Flask framework. This framework makes it easy to create an application in Python that also provides an API.
 
 This application consists out of six modules:
 \begin{enumerate}
@@ -196,7 +196,7 @@ This application consists out of six modules:
   \item cert 
 \end{enumerate}
 
-Firstly, the server part functions as web server. There are three different API-endpoints: status, request-permission and request-payment. The status endpoint returns whether the origin domain of the request is allowed to request payments. The request-permission endpoint is used to add the origin domain to the whitelist. Lastly, the request-payment endpoint is used to request and execute the automated payment.
+Firstly, the server part functions as a web server. There are three different API-endpoints: status, request-permission and request-payment. The status endpoint returns whether the origin domain of the request is allowed to request payments. The request-permission endpoint is used to add the origin domain to the whitelist. Lastly, the request-payment endpoint is used to request and execute the automated payment.
 
 Secondly, the reward module keeps track of the budget. Based on a maximal hourly reward, the fee is calculated and used in the micropayments.
 
@@ -241,7 +241,7 @@ Fifthly, the dns module takes care of the extraction of the DNS entries. As desc
 
 Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in Chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
 
-SSL certificates are structured according to the X509 format. These certificates contain basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before they were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, a certificate extension called \textit{CertificatePolicies} is used. The following policies with corresponding object IDs are used for the different types of certificates:
+SSL certificates are structured according to the X509 format. These certificates contain basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before certificates were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, a certificate extension called \textit{CertificatePolicies} is used. The following policies with corresponding object IDs are used for the different types of certificates:
 
 \begin{enumerate}[leftmargin=8em]
   \item[2.23.140.1.2.1] Domain Validation
@@ -292,9 +292,9 @@ The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, 
 
 However, there are also so-called light wallets available, which do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at least include the transactions of the user. However, because not only the transactions of the user are downloaded, but also some transaction of several other users, the privacy of the user is preserved.
 
-The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet, which makes it much less of a hassle to set up a lightning node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an autopilot mode, where it automatically opens lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
+The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet, which makes it much less of a hassle to set up a Lightning Node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an autopilot mode, where it automatically opens Lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
 
-In the second phase of the implementation, two new aspects of this system are introduced: the transition to JavaScript/Electron and the use of the neutrino Bitcoin light wallet.
+In the second phase of the implementation, two new aspects of this system are introduced: the transition to JavaScript/Electron and the use of the Neutrino Bitcoin light wallet.
 
 In electron, it is also possible to create a tray application, so that the application keeps running when closed. 
 
