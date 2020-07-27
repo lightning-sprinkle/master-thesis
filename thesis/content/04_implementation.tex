@@ -117,7 +117,7 @@ Firstly, there is a normal client, in order to communicate with the network and 
 
 Secondly, there needs to be a Lightning Network Node. This client handles all the communication with the Lightning Network, and also interacts with the client in order to open or close channels. 
 
-Thirdly, since all the transactions that occur over the Lightning Network are easy to follow, there needs to be some form of obfuscation. The Onion Router (TOR) is used to anonymize the interaction with the network. Otherwise, it will be easy to link an IP address to a Lightning transaction.
+Thirdly, since all the transactions that occur over the Lightning Network are easy to follow, there needs to be some form of obfuscation. The Onion Router (TOR) \cite{mccoy2008shining} is used to anonymize the interaction with the network. Otherwise, it will be easy to link an IP address to a Lightning transaction.
 
 %En waarom is dat een probleem?
 
@@ -241,7 +241,7 @@ Fifthly, the dns module takes care of the extraction of the DNS entries. As desc
 
 Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in Chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
 
-SSL certificates are structured according to the X509 format. These certificates contain basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before certificates were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, a certificate extension called \textit{CertificatePolicies} is used. The following policies with corresponding object IDs are used for the different types of certificates:
+SSL certificates are structured according to the X509 format. These certificates contain basic info, like the certificate authority and the organization. As the X509 format is designed in 1988 \cite{biddle2009browser}, long before certificates were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, a certificate extension called \textit{CertificatePolicies} is used. The following policies with corresponding object IDs are used for the different types of certificates:
 
 \begin{enumerate}[leftmargin=8em]
   \item[2.23.140.1.2.1] Domain Validation
