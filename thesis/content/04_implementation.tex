@@ -49,7 +49,7 @@ Firstly, as a website, it is possible to configure the Cross-Origin Resource Sha
 
 The first security measure can be circumvented easily by setting \\\texttt{Access-Control-Allow-Origin:*}, which means that any publisher using the Publisher Library is able to connect to the User Service. 
 
-The second measure is harder to circumvent. As of 2020, every self-respecting website uses HTTPS, so it is impossible to not support the Publisher Library on HTTPS websites. So, not supporting the Publisher Library on HTTPS websites is not possible. There are a couple of workarounds to make it possible to support HTTPS enabled publishers to connect to localhost:
+The second measure is harder to circumvent. These days, every self-respecting website uses HTTPS, which makes it impossible to not support the Publisher Library on HTTPS websites. There are a couple of workarounds to make it possible to support HTTPS enabled publishers to connect to localhost:
 
 %twijfel over deze dubbele punt. En daarnaast: de eerste zin hieronder is nogal abrupt: ineens is het probleem opgelost. Twijfel of je daar iets meer woorden aan vuil moet maken.
  
@@ -101,13 +101,13 @@ The system that asks for permission also relies on the web ecosystem. The Publis
 \begin{figure}[h!]
   \setlength{\fboxsep}{0pt}%
   \fbox{\includegraphics[width=\textwidth-2px]{images/popup.png}}
-  \caption{Popup that asks for permission}
+  \caption{Pop-up that asks for permission}
 \end{figure}
 
 \subsection{Lightning Network}
 \label{sec:lightningnetwork}
 
-Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, somehow, needs to make a micropayment. As discussed in the Chapter \ref{cha:relatedwork}, existing payment service providers are not suitable since they violate the decentralized principle. Therefore, the landscape of cryptocurrencies that are suitable for micropayments is researched. It turned out that the Lightning Network is the most promising solution, as it relies on the cryptocurrency with the largest market capacity and is still able to process instant payments with minimal fees. The principle of the Lightning Network is already explained in Chapter \ref{cha:conceptanddesign}. This section will explain what challenges were faced during the implementation of the proof-of-concept.
+Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, somehow, needs to make a micropayment. As discussed in Chapter \ref{cha:relatedwork}, existing payment service providers are not suitable since they violate the decentralized principle. Therefore, the landscape of cryptocurrencies that are suitable for micropayments is researched. It turned out that the Lightning Network is the most promising solution, as it relies on the cryptocurrency with the largest market capacity and is still able to process instant payments with minimal fees. The principle of the Lightning Network is already explained in Chapter \ref{cha:conceptanddesign}. This section explains what challenges were faced during the implementation of the proof-of-concept.
 
 The Lightning Network is not a single implementation. The creators of the Lightning Network decided to create a Request For Comments (RFC) instead. This RFC describes how the network should function and by what rules. Several other parties are implementing clients that follow this standard. However, because of the current work-in-progress state of the system, there are small differences between the clients and even between different versions of clients. 
 
@@ -130,7 +130,7 @@ Thirdly, since all the transactions that occur over the Lightning Network are ea
 
 The node-launcher can be described as package bundle with all the components listed above, written in Python. It takes care that all the components are configured correctly and are up and running. It also features a tray application that shows the status of the application. In the first phase, this application is adopted as a lighting network solution as this application is easily modifiable.
 
-When the node-launcher is running, there is no GUI to interact with the Lightning Network node. It is up to the user to install a front-end that interacts with the Lightning Node. Examples of these front-ends are the Zap wallet\footnote{\url{https://github.com/LN-Zap/lnd}} or the Joule Browser Extension\footnote{\url{https://github.com/joule-labs/joule-extension}}. For this thesis, however, there is no need for a front-end, as the Lightning Sprinkle User Service is able to interact with then Lightning Node directly. 
+When the node-launcher is running, there is no GUI to interact with the Lightning Network node. It is up to the user to install a front-end that interacts with the Lightning Node. Examples of these front-ends are the Zap wallet\footnote{\url{https://github.com/LN-Zap/lnd}} or the Joule Browser Extension\footnote{\url{https://github.com/joule-labs/joule-extension}}. For this thesis, however, there is no need for a front-end, as the Lightning Sprinkle User Service is able to interact with the Lightning Node directly. 
 
 The design of a Lightning Network transaction is based on a one-time invoice structure. The receiver of the payment needs to create such an invoice first, which will be transmitted in the form of an encoded string or QR-code. This invoice contains details like the amount, payee public key, routing hints and an expiration date. The payor opens this invoice in the lighting network node application, and after that is able to submit the payment.
 
@@ -139,17 +139,17 @@ Due to this structure, it is very hard to make spontaneous payments. When sellin
 \subsubsection{Keysend}
 \label{sec:keysend}
 
-As of 2020, the Lightning Network is still in an experimental phase and under active development. During the implementation phase of this thesis, the team behind the lnd client, which is an implementation of the Lightning Network, explored a way to circumvent the invoice structure\footnote{\url{https://github.com/lightningnetwork/lnd/pull/3795}}. This feature is not yet part of the official Lightning Network specification, and therefore also not (yet) widely supported. During the implementation phase of this proof-of-concept, it was only possible to experiment with this circumvention, by using the latest beta version of the lnd client. 
+The Lightning Network is currently still in an experimental phase and under active development. During the implementation phase of this thesis, the team behind the lnd client, which is an implementation of the Lightning Network, explored a way to circumvent the invoice structure\footnote{\url{https://github.com/lightningnetwork/lnd/pull/3795}}. This feature is not yet part of the official Lightning Network specification, and therefore also not (yet) widely supported. During the implementation phase of this proof-of-concept, it was only possible to experiment with this circumvention, by using the latest beta version of the lnd client. 
 
 The implementation only exists in the latest \texttt{lncli} client. This command line tool connects to the \texttt{lnd} node and is able to interact with it. For example, it can create invoices. If both the payor and the payee are using the latest version of \texttt{lnd} and it is started with the \texttt{--accept-key-send} flag, it is possible to send spontaneous payments using the \texttt{--keysend} flag. It does not matter what configuration, client or version of the Lightning Network the nodes in between are using. 
 
-Unfortunately, the Lighting Sprinkle User Service needs to connect to the \texttt{lnd} node directly and does not make use of the \texttt{lncli}, therefore it is not a matter of setting the \texttt{--keysend} flag and a deeper understanding of the workaround is needed.
+Unfortunately, the Lighting Sprinkle User Service needs to connect to the \texttt{lnd} node directly and does not make use of the \texttt{lncli}. Therefore, it is not a matter of setting the \texttt{--keysend} flag and a deeper understanding of the workaround is needed.
 
-The workaround, however, is not straight forwarded as it seems to be. Normally, the invoice contains a hash of the preimage. The preimage is a cryptographically random bytearray with size 32, that is needed in order to redeem a locked payment. If there is no invoice, we cannot exchange this secret with the payor. To circumvent this issue, \texttt{lnd} makes use of a custom record as part of the payment.
+The workaround, however, is not as straight forwarded as it seems to be. Normally, the invoice contains a hash of the preimage. The preimage is a cryptographically random bytearray with size 32, that is needed in order to redeem a locked payment. If there is no invoice, we cannot exchange this secret with the payor. To circumvent this issue, \texttt{lnd} makes use of a custom record as part of the payment.
 
 \texttt{KeySendRecord uint64 = 5482373484}
 
-The custom record with this id, contains a preimage that is generated by the payor. Only the payee is able to read these custom records and is therefore also able to redeem the payment. The rest of the payment occurs in the standard way.
+The custom record with this ID, contains a preimage that is generated by the payor. Only the payee is able to read these custom records and is therefore also able to redeem the payment. The rest of the payment occurs in the standard way.
 \lstset{language=Python}
 \lstset{frame=lines}
 \lstset{caption={Constructing a keysend SendRequest}}
@@ -233,7 +233,7 @@ Secondly, the reward module keeps track of the budget. Based on a maximal hourly
 
 Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in Section \ref{sec:localhost}.
 
-Fourthly, the lnd module handles the communication with the Lightning Network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in Section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
+Fourthly, the lnd module handles the communication with the Lightning Network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in Section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. They are implemented in such a way that different types of macaroon provide different levels of privilege. 
 
 Fifthly, the dns module takes care of the extraction of the DNS entries. As described in Chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in JavaScript, introduces potential vulnerabilities as user generated content is able to alter JavaScript. Therefore, the service relies on TXT-records that are stored at the DNS server. In this way it is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
 
@@ -288,9 +288,9 @@ def isOrganization(hostname):
 
 \subsection{Electron tray application and Neutrino}
 \label{sec:electron}
-The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entireblockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL Internet connection. 
+The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entire blockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL Internet connection. 
 
-However, there are also so-called light wallets available, which do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at least include the transactions of the user. However, because not only the transactions of the user are downloaded, but also some transaction of several other users, the privacy of the user is preserved.
+However, there are also so-called light wallets available, which do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at least include the transactions of the user. However, because not only the transactions of the user are downloaded, but also a couple of transactions of several other users, the privacy of the user is preserved.
 
 The \texttt{lightning-app}\footnote{\url{https://github.com/lightninglabs/lightning-app}} uses the \texttt{neutrino}\footnote{\url{https://github.com/lightninglabs/neutrino}} light wallet, which makes it much less of a hassle to set up a Lightning Node. This \texttt{lightning-app} does not require to download the entire blockchain. Moreover, the \texttt{lightning-app} also features an autopilot mode, where it automatically opens Lightning channels, so that the user is able to spend money. This approach makes the proof-of-concept of this thesis much more viable. 
 
@@ -306,7 +306,7 @@ In electron, it is also possible to create a tray application, so that the appli
   \caption{The Lightning Sprinkle Tray Application}
 \end{figure}
 
-Nonetheless, as the thesis is only about developing a proof-of-concept and the translation to JavaScript/Electron took more time than expected, the development of this alternative implementation is not continued.
+Unfortunately, the translation to JavaScript/Electron took more time than expected. As this thesis is only about developing a proof-of-concept, the development of this alternative implementation is not continued.
 
 \subsection{Example website with Google AdSense}
 \label{sec:examplesite}
@@ -321,7 +321,7 @@ In order to demonstrate the project, a small static website is set up using an o
 
 To make the example as realistic as possible, the Google AdSense program is added, so that Google is able to serve real advertisements on the demo website. 
 
-One problem with such a third party supplier of advertisements like Google, is that normally there is no toggle to disable the advertisements other than not loading the JavaScript library of the advertisement network. Unofficially, however, it is possible to disable advertisements in the same way they are blocked by an Ad Blocker: by removing certain objects from the DOM. For Google AdSense, this is done by the following simple JavaScript line:
+One problem with such a third party supplier of advertisements like Google, is that normally there is no toggle to disable the advertisements other than not loading the JavaScript library of the advertisement network. Unofficially, however, it is possible to disable advertisements in the same way they are blocked by an Ad Blocker: by removing certain objects from the Document Object Model (DOM). For Google AdSense, this is done by the following simple JavaScript line:
 
 
 \lstset{language=JavaScript}
