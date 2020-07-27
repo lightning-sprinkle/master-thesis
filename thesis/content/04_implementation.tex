@@ -94,7 +94,7 @@ function getStatus() {
 \end{lstlisting}
 
 \subsubsection{Asking for permission}
-As stated in chapter \ref{cha:conceptanddesign}, the system determines the credibility of a website by checking the type of certificate the publisher has. If this certificate is based on organization validation (OV), the system pays to the publisher automatically. For smaller publishers, who cannot afford such a certificate, the Publisher Library can request permission to get paid. 
+As stated in Chapter \ref{cha:conceptanddesign}, the system determines the credibility of a website by checking the type of certificate the publisher has. If this certificate is based on organization validation (OV), the system pays to the publisher automatically. For smaller publishers, who cannot afford such a certificate, the Publisher Library can request permission to get paid. 
 
 The system that asks for permission also relies on the web ecosystem. The publisher library checks if this publisher is permitted. If this is not the case, a pop-up window is opened which opens a web page that is hosted on localhost by the user service. The user service is able to find out which publisher made the request by reading the referral header. The user is able to accept the request, which adds the domain name to the whitelist. In the future, this publisher is also able to request automated payments.
 
@@ -107,7 +107,7 @@ The system that asks for permission also relies on the web ecosystem. The publis
 \subsection{Lightning Network}
 \label{sec:lightningnetwork}
 
-Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, somehow, needs to make a micropayment. As discussed in the chapter \ref{cha:relatedwork}, existing payment service providers are not suitable since they violate the decentral principle. Therefore, the landscape of cryptocurrencies that are suitable for micropayments is researched. It turned out that the Lightning Network is the most promising solution, as it relies on the cryptocurrency with the largest market capacity and is still able to process instant payments with minimal fees. The principle of the Lightning Network is already explained in chapter \ref{cha:conceptanddesign}. This section will explain what challenges were faced during the implementation of the proof-of-concept.
+Now there is an ecosystem that enables publishers to communicate with a service that runs outside the browser. This service, somehow, needs to make a micropayment. As discussed in the Chapter \ref{cha:relatedwork}, existing payment service providers are not suitable since they violate the decentral principle. Therefore, the landscape of cryptocurrencies that are suitable for micropayments is researched. It turned out that the Lightning Network is the most promising solution, as it relies on the cryptocurrency with the largest market capacity and is still able to process instant payments with minimal fees. The principle of the Lightning Network is already explained in Chapter \ref{cha:conceptanddesign}. This section will explain what challenges were faced during the implementation of the proof-of-concept.
 
 The Lightning Network is not a single implementation. The creators of the Lightning Network decided to create a request for comments (RFC) instead. This RFC describes how the network should function and by what rules. Several other parties are implementing clients that follow this standard. However, because of the current work-in-progress state of the system, there are small differences between the clients and even between different versions of clients. 
 
@@ -231,15 +231,15 @@ Secondly, the reward module keeps track of the budget. Based on a maximal hourly
     return reward
 \end{lstlisting}
 
-Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in section \ref{sec:localhost}.
+Thirdly, the status image module generates an image with given dimensions. This image is used as a workaround in order to support two-way communication, as described in Section \ref{sec:localhost}.
 
-Fourthly, the lnd module handles the communication with the Lightning Network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
+Fourthly, the lnd module handles the communication with the Lightning Network node. This communication is based on gRPC. It provides a function that is able to send a payment to an address immediately using the keysend method. The keysend method is described in more detail in Section \ref{sec:keysend}. In order to authenticate at the lnd service, macaroons are used. Macaroons are comparable to cookies and contain authentication data. There are implemented in such a way that different types of macaroon provide different levels of privilege. 
 
-Fifthly, the dns module takes care of the extraction of the DNS entries. As described in chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in JavaScript, introduces potential vulnerabilities as user generated content is able to alter JavaScript. Therefore, the service relies on TXT-records that are stored at the DNS server. In this way it is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
+Fifthly, the dns module takes care of the extraction of the DNS entries. As described in Chapter \ref{cha:conceptanddesign}, the payment needs to have a destination. Storing the public key of the destination in JavaScript, introduces potential vulnerabilities as user generated content is able to alter JavaScript. Therefore, the service relies on TXT-records that are stored at the DNS server. In this way it is guaranteed that the recipient of the payment also controls the DNS records of the domain. This module implements a DNS resolver and looks for a TXT-record that contains a public key according to the following format:
 
 \texttt{lnd-pubkey=027d2456f6d4aaf27873b68b7717b...}
 
-Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
+Lastly, the cert module is able to check the credibility of the domain name by looking up the type of certificate that is used. As described in Chapter \ref{cha:conceptanddesign}, the presence of an OV or EV certificate indicates enough credibility to automate the payment immediately. 
 
 SSL certificates are structured according to the X509 format. These certificates contain basic info, like the certificate authority and the organization. As the X509 format is designed in 1988, long before they were used for HTTPS, it does not have any option to store the type of certificate directly. In order to differentiate between DV, OV and EV certificates, a certificate extension called \textit{CertificatePolicies} is used. The following policies with corresponding object IDs are used for the different types of certificates:
 
@@ -288,7 +288,7 @@ def isOrganization(hostname):
 
 \subsection{Electron tray application and Neutrino}
 \label{sec:electron}
-The first proof-of-concept, as described in section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entireblockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
+The first proof-of-concept, as described in Section \ref{sec:lightningnetwork}, uses the normal full \texttt{btcd} daemon. The disadvantage of this method, is that the entireblockchain needs to be downloaded. As of 2020, this is over 300GB and takes over 24 hours on an average DSL internet connection. 
 
 However, there are also so-called light wallets available, which do not require the entire blockchain to be downloaded. They rely on other nodes and only download the blocks after a certain block number. In order to only download transactions that are relevant for the user, bloom filters are used. Bloom filters make sure that a part of all transactions is downloaded that at least include the transactions of the user. However, because not only the transactions of the user are downloaded, but also some transaction of several other users, the privacy of the user is preserved.
 
