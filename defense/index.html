@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Universal Payments | Initial talk</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/tu-berlin.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Automatic Universal In-Browser Payments</h1>
+				<h3>An alternative model to web advertising</h2>
+				<h4>Daan Middendorp &dash; November 6<sup>th</sup>, 2019</h4>
+				</aside>
+			</section>
+			<section>
+				<h2>Problem &amp; Statement</h2>
+				<br />
+				<table>
+					<tr>
+						<td>
+							<b>Unpaid online content:</b><br />
+							<ul>
+								<li>Targeted advertising </li>
+								<li>Subscriptions </li>
+								<li>Microtransactions </li>
+							</ul>
+						</td>
+						<td>
+							<b></b><br />
+							<ul style="list-style-type:none">
+								<li>→  &nbsp;Privacy invasive</li>
+								<li>→  &nbsp;Vendor lock-in</li>
+								<li>→  &nbsp;Too much effort / vendor lock-in</li>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Targeted advertising</h2>
+				<embed src="images/admodel.svg" class="plain" style="width: 15em; margin-left: 6em; margin-bottom: 1em"  />
+			</section>
+			<section>
+				<h2>Micropayments / subscriptions</h2>
+				<embed src="images/micropayments.svg" class="plain" style="width: 15em; margin-left: 6em; margin-bottom: 1em" />
+			</section>
+			<section>
+				<img src="images/privad.png" style="float:right; width: 8em; margin-right: 2em; border-width: 1px;" />
+				<h2>Related work</h2>
+					<b>Academic:</b><br />
+					<ul>
+						<li>Privad</li>
+						<li>Brave browser</li>
+					</ul>
+					<br />
+					<img src="images/brave.png" class="plain"  style="float: right; width: 8em; margin-right: 2em; border-width: 0px;" />
+					<aside class="notes">
+						The brave browser provides an example of a system where it is possible to donate to publishers. 
+						However, this system is still suboptimal, because you need to install a different browser, which requires a lot of effort.
+						Furthermore, their business model is questionable, some publishers are complaining that it is really hard to receive your money and their are taking away ad revenue by blocking ads by default. 
+						Or (in some cases) replacing the ads of a publisher with their own.
+					</aside>
+			</section>
+			<section>
+				<h2>Desired solution</h2>
+				<table >
+					<tr>
+						<td>
+							<div style="position:relative; width:640px; height:480px; margin:0 auto;">
+								<embed class="fragment fade-out" data-fragment-index="0" src="images/payjs1.svg" style="position:absolute;bottom:3em;left:0;width: 12em; margin-left: 6em; margin-bottom: 1em" />
+								<embed class="fragment fade-in" data-fragment-index="0" src="images/payjs2.svg" style="position:absolute;bottom:3em;left:0;width: 12.3em; margin-left: 6em; margin-bottom: 1em" />
+								<embed class="fragment fade-in" data-fragment-index="2" src="images/payjs3.svg" style="position:absolute;bottom:3em;left:0;width: 12.3em; margin-left: 6em; margin-bottom: 1em" />
+							</div>
+						</td>
+						<td style="font-size: 24px; vertical-align: top;">
+							<br />
+							<ol>
+								<li>User requests content</li>
+								<li data-fragment-index="0" class="fragment">Handshake is performed</li>
+								<li data-fragment-index="1" class="fragment">Is there money in the wallet?</li>
+								<li data-fragment-index="2" class="fragment">If yes: pay, show ads otherwise</li>
+							</ol>
+						</td>
+					</tr>
+				</table>
+				<aside class="notes">
+					It is important to understand that this system works as an alternative to advertisment. However, it is up to the user. 
+					He can decide to pay or not to pay. The consequence will be that ads are shown.
+				</aside>
+			</section>
+			<section>
+				<h2>Possible strategies</h2>
+				<table>
+					<tr>
+						<td>
+							<ol>
+								<li>Amount x per hour</li>
+								<li>Amount y per view with maximum amount per publisher/hour</li>
+								<li>Amount z per publisher per day</li>
+							</ol>
+						</td>
+					</tr>
+				</table>
+				<aside class="notes">
+					The problem with this approach is that we need a fair way to spend the money to the different publishers.
+					In order to do this, we came up with diferent strategies.
+				</aside>
+			</section>
+			<section>
+				<h2>Requirements</h2>
+				<table>
+					<tr>
+						<td>
+							<ol>
+								<li>as-easy-to-use as ads</li>
+								<li>HTTP and JS-based</li>
+								<li>No vendor lock-in</li>
+								<li>Not privacy invasive</li>
+								<li>Open source / transparent</li>
+							</ol>
+						</td>
+					</tr>
+				</table>
+				<aside class="notes">
+					With the new possiblities that came with the invention of blockchain technology, it becomes possible to develop a system with these requirements.
+				</aside>
+			</section>
+			<section>
+				<h2>Challenges</h2>
+				<ul>
+					<li>How to request a payment?</li>
+					<li>How to keep it decentral?</li>
+					<li>Where to store the wallet?</li>
+					<li>How to keep it private and transparent?</li>
+					<li>...</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Evaluation Proof-of-Concept</h2>
+				<ul>
+					<li>Automated payments</li>
+					<li>No configuration</li>
+					<li>No single authority</li>
+					<li>Tamper proof</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Conclusion</h2>
+				<ul>
+					<li>Automatic Universal In-Browser Payments</li>
+					<li>An alternative model to web advertising</li>
+					<li>Based on crypto</li>
+					<li>No single authority</li>
+				</ul>
+			</section>
+		</div>
+	</div>
+
+	<div id="hidden" style="display:none;">
+		<div id="header">
+			<div id="footer-left">6.11.2019</div>
+			<div id="footer-right">Automatic Universal In-Browser Payments | Initial Talk | Daan Middendorp</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="js/reveal.js"></script>
+	<script src="js/tu-berlin.js"></script>
+	<div class="tu-logo-container">
+		<img src="images/logo.svg" class="tu-logo" />
+	</div>
+	<div class="snet-logo-container">
+		<img src="images/footer.png" class="snet-logo" />
+	</div>
+</body>
+
+</html>
