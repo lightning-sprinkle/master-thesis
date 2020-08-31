@@ -98,87 +98,85 @@
 				</ul>
 			</section>
 			<section>
-				<h2>Desired solution</h2>
-				<table >
-					<tr>
-						<td>
-							<div style="position:relative; width:640px; height:480px; margin:0 auto;">
-								<embed class="fragment fade-out" data-fragment-index="0" src="images/payjs1.svg" style="position:absolute;bottom:3em;left:0;width: 12em; margin-left: 6em; margin-bottom: 1em" />
-								<embed class="fragment fade-in" data-fragment-index="0" src="images/payjs2.svg" style="position:absolute;bottom:3em;left:0;width: 12.3em; margin-left: 6em; margin-bottom: 1em" />
-								<embed class="fragment fade-in" data-fragment-index="2" src="images/payjs3.svg" style="position:absolute;bottom:3em;left:0;width: 12.3em; margin-left: 6em; margin-bottom: 1em" />
-							</div>
-						</td>
-						<td style="font-size: 24px; vertical-align: top;">
-							<br />
-							<ol>
-								<li>User requests content</li>
-								<li data-fragment-index="0" class="fragment">Handshake is performed</li>
-								<li data-fragment-index="1" class="fragment">Is there money in the wallet?</li>
-								<li data-fragment-index="2" class="fragment">If yes: pay, show ads otherwise</li>
-							</ol>
-						</td>
-					</tr>
-				</table>
-				<aside class="notes">
-					It is important to understand that this system works as an alternative to advertisment. However, it is up to the user. 
-					He can decide to pay or not to pay. The consequence will be that ads are shown.
-				</aside>
+				<h2>Concept</h2>
+				Send automated micropayments to the publisher of a website during the visit with a value that is comparable to ad revenue.
+				<img src="images/overview-concept.png" class="plain" style="height:10em;margin-left:4em" />
 			</section>
 			<section>
-				<h2>Possible strategies</h2>
-				<table>
-					<tr>
-						<td>
-							<ol>
-								<li>Amount x per hour</li>
-								<li>Amount y per view with maximum amount per publisher/hour</li>
-								<li>Amount z per publisher per day</li>
-							</ol>
-						</td>
-					</tr>
-				</table>
-				<aside class="notes">
-					The problem with this approach is that we need a fair way to spend the money to the different publishers.
-					In order to do this, we came up with diferent strategies.
-				</aside>
-			</section>
-			<section>
-				<h2>Requirements</h2>
-				<table>
-					<tr>
-						<td>
-							<ol>
-								<li>as-easy-to-use as ads</li>
-								<li>HTTP and JS-based</li>
-								<li>No vendor lock-in</li>
-								<li>Not privacy invasive</li>
-								<li>Open source / transparent</li>
-							</ol>
-						</td>
-					</tr>
-				</table>
-				<aside class="notes">
-					With the new possiblities that came with the invention of blockchain technology, it becomes possible to develop a system with these requirements.
-				</aside>
-			</section>
-			<section>
-				<h2>Challenges</h2>
+				<h2>Design - Micropayments</h2>
 				<ul>
-					<li>How to request a payment?</li>
-					<li>How to keep it decentral?</li>
-					<li>Where to store the wallet?</li>
-					<li>How to keep it private and transparent?</li>
-					<li>...</li>
+					<li>Lightning Network</li>
+					<li>Based on bitcoin</li>
+					<li>Clever structure with joint accounts</li>
+					<li>Payments possible &lt; 1 cent</li>
 				</ul>
 			</section>
 			<section>
-				<h2>Evaluation Proof-of-Concept</h2>
+				<h2>Design - Application</h2>
 				<ul>
-					<li>Automated payments</li>
-					<li>No configuration</li>
-					<li>No single authority</li>
-					<li>Tamper proof</li>
+					<li>Browser plugin not suitable</li>
+					<li>Lightning Network Wallet</li>
+					<li>Communication website ↔ application
+						<ul>
+							<li>Localhost</li>
+						</ul>
+					</li>
 				</ul>
+				<img src="images/electron-tray.png" class="plain"  style="float: right; width: 12em; margin-right: 0em; border-width: 0px;" />
+			</section>
+			<section>
+				<h2>Design - Application</h2>
+				<img src="images/overview-design.png" class="plain" style="height:12em;" />
+			</section>
+			<section>
+				<video controls >
+
+					<source src="https://raw.githubusercontent.com/lightning-sprinkle/master-thesis/master/videos/demonstration.webm"
+									type="video/webm">
+			
+					Sorry, your browser doesn't support embedded videos.
+			</video>
+			</section>
+			<section>
+				<h2>Design - Challenges</h2>
+				<ul>
+					<li>How to determine credibility of a publisher?</li>
+					<li>How to make sure we are paying to the publisher?</li>
+					<li>How to distribute the revenue in a fair way?</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Design - Credibility</h2>
+				<ul>
+					<li>Pagerank</li>
+					<li>Domain names</li>
+					<li>SSL Certificates
+						<ul>
+							<li>DV - Domain Validation</li>
+							<li>OV - Organization Validation</li>
+							<li>EV - Extended Validation</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Design - Verification</h2>
+				<ul>
+					<li>User generated content</li>
+					<li>DNS TXT-Record</li>
+				</ul>
+				<pre style="box-shadow:none">
+publisher.landgenoot.com. 3600	IN	A	185.199.110.153
+publisher.landgenoot.com. 3600	IN	A	185.199.111.153
+publisher.landgenoot.com. 3600	IN	A	185.199.108.153
+publisher.landgenoot.com. 3600	IN	A	185.199.109.153
+publisher.landgenoot.com. 3600	IN	TXT	"lnd-pubkey=027d2456f6d4aaf27873b68b7717c8137aaa8043d687a2113b916a5016e9a880e9"
+				</pre>
+			</section>
+			<section>
+				<h2>Design - Dynamic Revenue Distribution</h2>
+				<h4>Budget/10</h4>
+				Example: Budget is 20 cents per day. First publisher gets 2 cents, the second 1.8 cent and so on. The budget is topped up every minute.
 			</section>
 			<section>
 				<h2>Conclusion</h2>
